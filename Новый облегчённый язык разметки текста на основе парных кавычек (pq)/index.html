@@ -1,0 +1,485 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+body td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h3 {
+    margin: 0;
+    font-size: 137.5%;
+    font-weight: 400;
+}
+td {text-align: justify; /*font-family: Tahoma, sans-serif*/}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #DDD}
+span.cu_brackets {cursor: pointer}
+span.cu {background-color: #F7F7FF}
+abbr {text-decoration: none; border-bottom: 1px dotted}
+pre {margin: 0}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 7px 0 0 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+/*
+ul li: last-child, ol li: last-child {padding-bottom: 0;} /*not working? WTF? (оставлю эту строчку здесь до тех пор, пока не исправят CSS [не собираюсь привыкать к правилам, которые противоречат здравому смыслу])*/
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;} /*this line works correctly*/
+table table {margin: 1.5em 0; border-collapse: collapse}
+table table th, table table td {padding: .3em; border: 1px solid #ccc}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+</style>
+</head>
+<body>
+<table width="55%" align="center"><tr><td>
+<!--[[[
+[[[Поток: Разработка]]]
+[[[Хабы: Python, HTML]]]
+[[[Заголовок: Новый облегчённый язык разметки текста на основе [[[одиночных ]]]парных кавычек (pq)]]]
+[[[Метки: разметка текста, русская qазметка]]]
+
+]]]-->Я не могу объяснить, как мне вообще взбрела в голову идея такого языка разметки, но то, что получилось в итоге — весьма... <!--[[[эм, ]]]-->занятно.<br />
+Надежды на реальное практическое использование кем-либо этой <abbr title="(: шутки :)">штуки</abbr> у меня, конечно, нет, но некоторые идеи, использованные в этом языке разметки, вполне могут дать пищу для размышлений и как-то поспособствовать развитию других существующих или новых языков.<br />
+Итак, перейду к описанию самого языка. <span class="sq"><span class="sq_brackets">[</span>Если кто-то вдруг не понял, о чём вообще идёт речь, то к <a href="https://ru.wikipedia.org/wiki/Язык_разметки#.D0.9E.D0.B1.D0.BB.D0.B5.D0.B3.D1.87.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D1.8F.D0.B7.D1.8B.D0.BA.D0.B8_.D1.80.D0.B0.D0.B7.D0.BC.D0.B5.D1.82.D0.BA.D0.B8">облегчённым языкам разметки</a> относятся Markdown, BBCode, вики-разметка и т.п.<span class="sq_brackets">]</span></span><br />
+<img src="https://habrastorage.org/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png" title="[[[archived:{[http://web.archive.org/web/20171118110653/https://hsto.org/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png][http://archive.li/YAzNw][http://www.webcitation.org/6v43fNoY4]} <- https://avatars2.githubusercontent.com/u/22426167?v=4&amp;s=200]]]" /><cut /><br />
+Данная разметка основана на одиночных парных кавычках — символах <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> (вопрос выбора именно этих символов разъясняется ниже в P.S.), поэтому пока что я остановился на таком варианте названия: <i>пк-разметка</i> или <i>pqmarkup</i> (paired quotes markup).<br />
+<br />
+<h3>Как же эти кавычки набирать на клавиатуре?</h3>
+<br />
+В ОС семейства Windows можно с помощью программы <a href="https://autohotkey.com/download/">AutoHotkey</a> назначить глобальные горячие клавиши для ввода любых спец-символов. Чтобы назначить например <!--[[[Right]]]-->Alt+9 и <!--[[[Right]]]-->Alt+0 для ввода одиночных парных кавычек достаточно добавить такие две строчки в файл-скрипт настроек:<br />
+<pre>
+Alt &amp; 9:: SendInput {‘}
+Alt &amp; 0:: SendInput {’}
+</pre>
+<!--[[[
+ПРИМЕЧАНИЕ:
+!9:: SendInput {‘}
+!0:: SendInput {’}
+не работает правый Alt + 9/0 [[[‘в режиме’/‘при активированной’]]/]в русской раскладке клавиатуры.
+]]]--><!--[[[
+‘Инструкция по установке AutoHotkey и редактированию его настроек для непрограммистов’{
+[-написать инструкцию-]
+}](для статьи на Хабре не нужна — предполагается, что аудитория читателей Хабра может догадаться как делать такое самостоятельно)]]-->Также в Windows можно использовать без <!--[[[подготовительных/]]]-->дополнительных настроек сочетание клавиш <abbr title="в русской раскладке работает только через левый Alt">Alt</abbr>+0145 (на цифровой клавиатуре) для открывающей кавычки <pre style="display: inline">‘</pre> и Alt+0146 для закрывающей <pre style="display: inline">’</pre> (правда, работает это <abbr title="например, не работает в Microsoft Word">не во всех программах</abbr>, а также требует определённого состояния NumLock).<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">Визуально на цифровой клавиатуре эти цифры расположены очень удачно:<br /></span><div class="spoiler_text" style="display:none"><pre>
+┌───┬───┐
+│ 4 │ 5 │
+├───┼───┘
+│ 1 │
+├───┴───┐
+│ 0     │
+└───────┘
+</pre>
+Похоже на открывающую квадратную скобочку <pre style="display: inline">[</pre>.<!--]--><br />
+Очень легко запомнить.<br />
+</div>
+<br />
+<br />
+<h2>Синтаксис пк-разметки</h2>
+<br />
+<h3><!--[[[Стилизация/]]]-->Оформление текста</h3>
+<table>
+<tr><td><pre style="display: inline">*‘жирный’</pre></td><td><b>жирный</b><!--[[[‘.’[‘символ * похож на букву ж’]]]]--></td></tr>
+<tr><td><pre style="display: inline">_‘подчёркнутый’</pre></td><td><u>подчёркнутый</u></td></tr>
+<tr><td><pre style="display: inline">-‘зачёркнутый’</pre></td><td><s>зачёркнутый</s></td></tr>
+<tr><td><pre style="display: inline">~‘курсив’</pre></td><td><i>курсив</i><!--[[[‘.’[‘почему не /‘курсив’ — во-первых, курсив даёт не только наклон, но и изменяет шрифт (особенно буквы т, д, г), и, во-вторых, курсив может использоваться для придания особого смысла выделенному курсивом тексту, например так: ~‘правильный’ (‘близкий к правильному’/‘приблизительно правильный’), а в математике знак ~ означает ‘приблизительно’’]]]]--></td></tr>
+</table>
+<i>Примечание:</i><br />
+Вот так не работает: <pre style="display: inline">~*‘жирный курсив’</pre> (будет просто ~<b>жирный</b>), пишите так: <pre style="display: inline">~‘*‘</pre><i><b>жирный курсив</b></i><pre style="display: inline">’’</pre> или так: <pre style="display: inline">*‘~‘</pre><b><i>жирный курсив</i></b><pre style="display: inline">’’</pre> (<abbr title="чтобы не злоупотреблять форматированием и чтобы лучше было видно в исходной пк-разметке такие места">так и задумано</abbr>).<br />
+<br />
+<h3>Ссылки и всплывающие подсказки</h3>
+<br />
+Ссылка[http://адрес]<br />
+Ссылка[http://адрес ‘текст всплывающей подсказки’]<br />
+Текст[‘текст всплывающей подсказки’]<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display:none"><table>
+<tr><th>Пк-разметка</th><th>HTML</th><th>Как выглядит</th></tr>
+<tr><td>[http://address]</td><td>&lt;a href="http://address">http://address&lt;/a></td><td><a href="http://address">http://address</a></td></tr>
+<tr><td>ссылка[http://address]</td><td>&lt;a href="http://address">ссылка&lt;/a></td><td><a href="http://address">ссылка</a></td></tr>
+<tr><td>ссылка[https://address]</td><td>&lt;a href="https://address">ссылка&lt;/a></td><td><a href="https://address">ссылка</a></td></tr>
+<tr><td>‘многословная ссылка’[http://address]</td><td>&lt;a href="http://address">многословная ссылка&lt;/a></td><td><a href="http://address">многословная ссылка</a></td></tr>
+<tr><td>ссылка[https://address ‘текст всплывающей подсказки’]</td><td>&lt;a href="https://address" title="текст всплывающей подсказки">ссылка&lt;/a></td><td><a href="https://address" title="текст всплывающей подсказки">ссылка</a></td></tr>
+<tr><td>текст[‘текст всплывающей подсказки’]</td><td>&lt;abbr title="текст всплывающей подсказки">текст&lt;/abbr></td><td><abbr title="текст всплывающей подсказки">текст</abbr></td></tr>
+</table>
+</div>
+<br />
+<h3>Заголовки, картинки, цвет и таблицы</h3>
+<table>
+<tr><td>Н (русская)</td><td>H (английская)</td><td>Название заголовка\Header</td></tr>
+<tr><td>Р (русская)</td><td>P (английская)</td><td><!--[[[изобРажение/каРтинка/]]]-->Рисунок\Picture <abbr title="предполагается расширить возможности P до аналога тега <picture> из HTML 5.1">[почему не I(image)]</abbr></td></tr>
+<tr><td>С (русская)</td><td>C (английская)</td><td>цвет(Свет)\Color</td></tr>
+<tr><td>Т (русская)</td><td>T (английская)</td><td>Таблица\Table</td></tr>
+</table>
+<i>Примеры:</i><br />
+Заголовок — Н‘Название заголовка’<br />
+Картинка — Р‘http://адрес_картинки’<br />
+Текст красным цветом — С(#фф0000)‘текст’<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display:none"><table>
+<tr><th>Пк-разметка</th><th>HTML</th><th>Как выглядит</th></tr>
+<tr><th colspan="3">Заголовки\Headers</th></tr>
+<tr><td>H‘заголовок’</td><td rowspan="2">&lt;h3>заголовок&lt;/h3></td><td rowspan="2"><h3>заголовок</h3></td></tr>
+<tr><td>H(0)‘заголовок’</td></tr>
+<tr><td>H(1)‘заголовок’</td><td rowspan="2">&lt;h2>заголовок&lt;/h2></td><td rowspan="2"><h2>заголовок</h2></td></tr>
+<tr><td>H(+1)‘заголовок’</td></tr>
+<tr><td>H(-1)‘заголовок’</td><td>&lt;h4>заголовок&lt;/h4></td><td><h4>заголовок</h4></td></tr>
+<tr><th colspan="3">Изображения/картинки\Pictures</th></tr>
+<tr><td>P‘https://.../blue_circle.png’</td><td>&lt;img src="https://.../blue_circle.png" /></td><td><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></td></tr>
+<tr><td>P‘https://.../blue_circle.png’[http://address]</td><td>&lt;a href="http://address">&lt;img src="https://.../blue_circle.png" />&lt;/a></td><td><a href="http://address"><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></a></td></tr>
+<tr><td>P‘https://.../blue_circle.png’[‘текст всплывающей подсказки’]</td><td>&lt;img src="https://.../blue_circle.png" title="текст всплывающей подсказки" /></td><td><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" title="текст всплывающей подсказки" /></td></tr>
+<tr><td>P‘https://.../blue_circle.png’[http://address ‘текст всплывающей подсказки’]</td><td>&lt;a href="http://address" title="текст всплывающей подсказки">&lt;img src="https://.../blue_circle.png" />&lt;/a></td><td><a href="http://address" title="текст всплывающей подсказки"><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></a></td></tr>
+<tr><th colspan="3">Цвет текста</th></tr>
+<tr><td colspan="3"><sub>Цвет задаётся в формате #ККЗЗСС (Красный, Зелёный, Синий) посредством шестнадцатеричных цифр (можно использовать кириллицу: абсдеф/АБСДЕФ является аналогом abcdef/ABCDEF) или в формате КЗС посредством цифр <abbr title="считаю, что для оформления большинства статей 9 уровней/градаций для компонент цвета вполне достаточно , а максимум 8 (а не 9) выбран для того, чтобы можно было задавать серый цвет (444)">от 0 до 8</abbr>.</sub></td></tr>
+<tr><td>C(#ff0000)‘красный текст’</td><td>&lt;span style="color:#ff0000;">красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png" title="[[[archived:{[http://web.archive.org/web/20171118110411/https://hsto.org/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png][http://archive.li/EPSGx][http://www.webcitation.org/6v42ugqVW]}]]]" /></td></tr>
+<tr><td>C(800)‘тоже красный текст’</td><td>&lt;span style="color:#FF0000;">тоже красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png" title="[[[archived:{[http://web.archive.org/web/20171118110306/https://hsto.org/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png][http://archive.li/lswll][http://www.webcitation.org/6v43vSpmd]}]]]" /></td></tr>
+<tr><td>C(000)‘чёрный текст’</td><td>&lt;span style="color:#000000;">чёрный текст&lt;/span></td><td><span style="color:#000000;">чёрный текст</span></td></tr>
+<tr><th colspan="3">Таблицы</th></tr>
+<tr><td><pre style="display: inline">Т‘
+Н‘‘A’ ‘B’ ‘C’’
+ ‘‘1’ ‘2’ ‘3’’
+’</pre></td><td>&lt;table><br />
+&lt;tr>&lt;th>A&lt;/th>&lt;th>B&lt;/th>&lt;th>C&lt;/th>&lt;/tr><br />
+&lt;tr>&lt;td>1&lt;/td>&lt;td>2&lt;/td>&lt;td>3&lt;/td>&lt;/tr><br />
+&lt;/table></td><td><table>
+<tr><th>A</th><th>B</th><th>C</th></tr>
+<tr><td>1</td><td>2</td><td>3</td></tr>
+</table>
+</td></tr>
+<tr><th colspan="3"><sub>Объединение ячеек таблицы</sub></th></tr>
+<tr><td colspan="3"><sub>Чтобы объединить ячейки таблицы, нужно каждую отсутствующую ячейку заменить на символ <pre style="display: inline">-</pre> или символ <pre style="display: inline">|</pre> таким образом, чтобы следуя по символу <pre style="display: inline">-</pre> влево и по символу <pre style="display: inline">|</pre> вверх можно было выйти на соответствующую значимую ячейку.</sub></td></tr>
+<tr><td><pre style="display: inline">Т‘‘
+‘A’ ‘B’
+’‘
+‘C’  -
+’’
+</pre></td><td>&lt;table><br />
+&lt;tr>&lt;td>A&lt;/td>&lt;td>B&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td colspan="2">C&lt;/td>&lt;/tr><br />
+&lt;/table></td><td><table>
+<tr><td>A</td><td>B</td></tr>
+<tr><td colspan="2">C</td></tr>
+</table>
+</td></tr>
+<tr><td><pre style="display: inline">T‘‘
+‘ ’ ‘ ’ ‘1’ ’‘
+‘ ’ ‘ ’  |  ’‘
+‘2’  -   |  ’’
+</pre></td><td>&lt;table><br />
+&lt;tr>&lt;td> &lt;/td> &lt;td>&lt;/td>&lt;td rowspan="3">1&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td> &lt;/td> &lt;td>&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td colspan="2">2&lt;/td>&lt;/tr><br />
+&lt;/table></td><td><table>
+<tr><td> </td><td> </td><td rowspan="3">1</td></tr>
+<tr><td> </td><td> </td></tr>
+<tr><td colspan="2">2</td></tr>
+</table>
+</td></tr>
+<tr><td><pre style="display: inline">T‘‘
+‘ ’ ‘ ’ ‘1’ ’‘
+‘ ’ ‘ ’  |  ’‘
+‘2’  -   -  ’’
+</pre></td><td>&lt;table><br />
+&lt;tr>&lt;td> &lt;/td>&lt;td> &lt;/td>&lt;td rowspan="2">1&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td> &lt;/td>&lt;td> &lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td colspan="3">2&lt;/td>&lt;/tr><br />
+&lt;/table></td><td><table>
+<tr><td> </td><td> </td><td rowspan="2">1</td></tr>
+<tr><td> </td><td> </td></tr>
+<tr><td colspan="3">2</td></tr>
+</table>
+</td></tr>
+<tr><td colspan="3"><sub>Для больших объединений ячеек (2х2 и более): вправо от значимой ячейки идут символы <pre style="display: inline">-</pre>, вниз идут символы <pre style="display: inline">|</pre>, а остальные отсутствующие ячейки можно заполнять либо символом <pre style="display: inline">-</pre> либо <pre style="display: inline">|</pre>, но рекомендуется всегда использовать <pre style="display: inline">-</pre>.</sub></td></tr>
+<tr><td><pre style="display: inline">T‘‘
+‘1’  -   -  ‘2’ ’‘
+ |   -   -  ‘3’ ’‘
+ |   -   -  ‘4’ ’‘
+‘5’ ‘6’ ‘7’     ’’
+</pre></td><td>&lt;table><br />
+&lt;tr>&lt;td colspan="3" rowspan="3">1&lt;/td>&lt;td>2&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td>3&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td>4&lt;/td>&lt;/tr><br />
+&lt;tr>&lt;td>5&lt;/td>&lt;td>6&lt;/td>&lt;td>7&lt;/td>&lt;/tr><br />
+&lt;/table></td><td><table>
+<tr><td colspan="3" rowspan="3">1</td><td>2</td></tr>
+<tr><td>3</td></tr>
+<tr><td>4</td></tr>
+<tr><td>5</td><td>6</td><td>7</td></tr>
+</table>
+</td></tr>
+</table>
+</div>
+<br />
+<h3>Комментарии</h3>
+<br />
+[[[комментарий/<abbr title="А что? :) Очень удобно таким способом прятать в исходном тексте лишние слова/мысли, которые жалко удалять.">контейнер для воды (:</abbr>]]]<br />
+<br />
+<h3><a href="https://pqmarkup.github.io/ru/syntax">Полное описание синтаксиса форматирования.</a></h3>
+<br />
+<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот немного истории выбора тегов [для таблиц])<br /></span><div class="spoiler_text" style="display:none">Изначально я планировал альтернативный вариант задания тегов. Вот такой:<br />
+<pre style="display: inline">[[H]Header/Заголовок[-H]]</pre><br />
+или<br />
+<pre style="display: inline">[[H]Header/Заголовок[-]]</pre><br />
+или<br />
+<pre style="display: inline">[[H]Header/Заголовок]</pre><br />
+<br />
+Соответственно, таблицы задавались тегом <pre style="display: inline">[[T] ...]</pre><br />
+Разделитель столбцов был таким — <pre style="display: inline">[]</pre><br />
+Разделитель строк был таким — <pre style="display: inline">[[]]</pre><br />
+<br />
+Пример таблицы:<br />
+<pre>[[Т]
+A[]B[]C
+[[]]
+1[]2[]3
+[-Т]]</pre>
+или так:<br />
+<pre>[[Т]
+[[]]A[]B[]C
+[[]]1[]2[]3
+[-Т]]</pre>
+(Закрывающий тег <pre style="display: inline">[-Т]</pre> можно опустить.)<br />
+Но потом я вспомнил, что <!--[[[много/]]]-->несколько вариантов выбора для одного и того же форматирования — это то, что мне <abbr title="ещё мне не нравится, что нельзя вставить блок кода в цитату, а также отсутствие поддержки <abbr title='...'> (прецедент[https://github.com/JuliaLang/julia/issues/2097#issuecomment-339924750 ])">не нравится в Markdown</abbr> (например: <pre style="display: inline">__так__</pre> или <pre style="display: inline">**так**</pre>), и я решил, что оставлять два варианта форматирования в пк-разметке (<pre style="display: inline">~‘...’</pre> и <pre style="display: inline">[[~]...]</pre>) будет неправильно. А значит, имеет смысл оставить только одну форму записи — с кавычками <pre style="display: inline">‘’</pre>, так как она менее конфликтующая и является первой/основной идеей, положившей начало этой разметки текста <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display:none">а то, что набирать символы кавычек <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> непривычно — я считаю, это не так страшно, так как <span class="sq"><span class="sq_brackets">[</span>с моей точки зрения<span class="sq_brackets">]</span></span> важнее читаемость разметки и её <abbr title="относящиеся к восприятию [информации]">когнитивные</abbr> характеристики (легко понять/запомнить правила разметки, легко<!--[[[/приятно]]]--> читать/воспринимать размеченный текст), а также <!--[[[минимизация/]]]-->снижение вероятности возникновения конфликтов (когда простой текст или формула <span class="sq"><span class="sq_brackets">[</span>ошибочно/<span class="sq_brackets">]</span></span>ненамеренно трактуется как разметка) и избежание необходимости что-то экранировать (а то ведь часто можно и пропустить/не заметить такие ошибки — когда размеченный текст преобразовался немного не в то, что задумывалось)</span><span class="cu_brackets_b">}</span></span>.<br />
+<br />
+Определившись с выбором в пользу кавычек, сначала я хотел сделать такой разделитель строк — <pre style="display: inline">‘’</pre> (по аналогии с <pre style="display: inline">[]</pre>), но быстро одумался (ведь тогда возникает проблема с пустыми ячейками в самой таблице) и пришёл к нынешней форме записи:<br />
+<pre style="display: inline">Т‘
+‘‘A’ ‘B’ ‘C’’
+‘‘1’ ‘2’ ‘3’’
+’</pre><br />
+или так:<br />
+<pre style="display: inline">Т‘‘
+‘A’ ‘B’ ‘C’
+’‘
+‘1’ ‘2’ ‘3’
+’’
+</pre><br />
+<sub><span class="sq"><span class="sq_brackets">[</span>Разумеется, эта форма записи не самая приятная для набора и я немало думал над тем, возможно ли её как-то упростить (или хотя бы дать возможность альтернативной более простой формы записи для таблиц, как в <a href="https://github.github.com/gfm/#tables-extension-">GitHub Flavored Markdown</a> или в <a href="https://habrahabr.ru/info/help/markdown/">Habrahabr Flavored Markdown</a>), но решил остановиться на нынешней форме записи, так как она итак достаточно лёгкая (по сравнению с HTML &lt;table>) и при этом имеет неоспоримое преимущество <span class="sq"><span class="sq_brackets">[</span>перед более простой формой записи<span class="sq_brackets">]</span></span> — возможность включать<!--[[[/вставлять]]]--> в ячейку таблицы всё что угодно (включая любые другие <!--[[[блоки/]]]-->элементы разметки и даже вложенные таблицы), а также нынешняя форма записи даёт возможность использовать пробелы в начале и в конце строки любой ячейки таблицы (возможность спорная, но может пригодиться для <!--[[[преобразования/представления/]]]-->экспорта таблиц баз данных<!--[[[для конвертирования документов Microsoft Word и подобных в пк-разметку]]]-->).<span class="sq_brackets">]</span></span></sub><br />
+<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот история/‘как я пришёл к’ нынешней форме записи для объединения ячеек таблицы)<br /></span><div class="spoiler_text" style="display:none"><sub><sub>...не, решил спрятать в комментарий и не включать в статью<!--[[[ {в непричёсанном виде выглядит некрасиво {из-за отсутствия чёткого разделения где текст, а где моноширный код[[[, а также из-за межстрочного интервала в браузерах (речь про блоки с кодом), при котором в таблицах в псевдографике вертикальные линии получаются пунктирными (вроде `line-height: normal` полностью исправляет эту проблему {эх... если бы всё было так просто:
+Такой HTML-код:
+```
+<sub><sub><sub>
+<pre style="display: inline">
+┌───┐
+│   │
+└───┘
+</pre>
+</sub></sub></sub>
+```
+отображается в Google Chrome с разрывами в вертикальных линиях.
+Зато с двумя `<sub>` [а также с одним `<sub>` и вообще без `<sub>`] уже всё нормально:
+```
+<sub><sub>
+<pre style="display: inline">
+┌───┐
+│   │
+└───┘
+</pre>
+</sub></sub>
+```
+Помогает отказ от `style="display: inline"` [но для многострочного кода этот стиль и не нужен]:
+```
+<sub><sub><sub>
+<pre>
+┌───┐
+│   │
+└───┘
+</pre>
+</sub></sub></sub>
+```
+Этот HTML-код даёт линии без разрывов.
+})]]]}, а такой бред причёсывать смысла нет, он имеет только/исключительно историческую ценность}]]]-->, а если кому это и правда интересно, тогда смотрите исходник статьи.</sub></sub><!--[[[
+[./м.txt]:‘
+23:33 02.09.2016
+Рассмотрим простенькую табличку:
+T‘‘
+=‘1’ -‘’ ‘2’ ’‘
+-‘’  -‘’ ‘3’ ’‘
+ ‘4’ ‘5’ ‘6’ ’’
+[[[
+┌───────┬───┐
+│       │ 2 │
+│   1   ├───┤
+│       │ 3 │
+├───┬───┼───┤
+│ 4 │ 5 │ 6 │
+└───┴───┴───┘
+(Почему здесь и далее дублирую таблицы псевдографикой — [чтобы можно было понять как отрисуется таблица по/]‘для наглядности в’ исходной пк-разметке.)
+]]]
+Изначально я хотел использовать обозначение `-‘’` для ячеек, которые необходимо склеить с соседними {`-` означает отсутствующую ячейку, и, в принципе, можно было обойтись одним `-` без `‘’`, но для большей симметричности[?] — чтобы в каждой строке было одинаковое количество кавычек}.
+Вот так:
+`()‘T‘‘
+‘1’ -‘’ ‘2’ ’‘
+-‘’ -‘’ ‘3’ ’‘
+‘4’ ‘5’ ‘6’ ’’
+’
+
+Но у такого решения есть проблемы.
+Рассмотрим такой пример:
+`()‘T‘
+‘‘1’ ‘2’’
+‘‘3’ -‘’’
+’’
+Такая пк-разметка может быть истолкована неоднозначно.
+Ей соответствуют две таблицы. Такая:
+T‘‘
+ ‘1’ =‘2’ ’‘
+ ‘3’ -‘’  ’’
+┌───┬───┐
+│ 1 │   │
+├───┤ 2 │
+│ 3 │   │
+└───┴───┘
+И такая:
+T‘‘
+ ‘1’  ‘2’ ’‘
+=‘3’ -‘’  ’’
+┌───┬───┐
+│ 1 │ 2 │
+├───┴───┤
+│   3   │
+└───────┘
+
+>Почему нельзя было обойтись одним символом (я хотел вообще использовать `.`).
+Тогда не будет работать с пустыми ячейками в таблице ‘’.
+Отдельный символ нужен, чтобы обозначить значимую ячейку.
+[Хм, тогда можно значимую ячейку обозначать так: `.‘’`, а склеенную просто `.`]
+
+>Почему символ `=`, а не `+`?
+Запись `+``‘добавлено’` зарезервирована для обозначения внутристрочных диффов/изменений (для систем управления версиями).
+А почему именно `=` — ну этот символ как два минуса.
+
+‘Объединение ячеек таблицы:’{
+Чтобы объединить ячейки таблицы, нужно их просто пометить символом `.` (отсутствующие ячейки помечаются просто точкой `.`, а верхняя левая ячейка — `.‘...’`)
+T‘‘
+.‘1’ .  ‘2’ ’‘
+.    . .‘3’ ’‘
+.‘4’ . .    ’’
+ 
+>Почему символ `.`?
+<‘Ну, в PHP, Perl[‘<Perl6’], Lua[‘..’], AutoHotkey `.` используется для конкатенации строк.
+[Я ещё думал использовать символ `#`, но он слишком бросается в глаза. Ещё можно `&`.]’
+
+>Почему `.` идёт в начале (перед строкой с ячейкой таблицы): так — `.‘’`, а не так — `‘’.`?
+<‘Такая запись:
+T‘‘
+.‘1’ . ‘2’ ’‘
+.    . ‘3’ ’’
+по мне так, нагляднее, чем такая:
+T‘‘
+‘1’. . ‘2’ ’‘
+   . . ‘3’ ’’
+’
+
+8:07 03.09.2016/
+Не, через `.` не получится. Возникает проблема в такой ситуации:
+`()‘T‘‘
+ ‘’  ‘’ .‘1’ ’‘
+ ‘’  ‘’ .    ’‘
+.‘2’ .  .    ’’
+’
+Такая пк-разметка может быть истолкована неоднозначно.
+Ей соответствуют две таблицы. Такая:
+T‘‘
+‘’ ‘’ ‘1’ ’‘
+‘’ ‘’  |  ’‘
+‘2’ -  |  ’’
+┌───┬───┬───┐
+│   │   │   │
+├───┼───┤   │
+│   │   │ 1 │
+├───┴───┤   │
+│   2   │   │
+└───────┴───┘
+И такая:
+T‘‘
+‘’ ‘’ ‘1’ ’‘
+‘’ ‘’  |  ’‘
+‘2’ -  -  ’’
+┌───┬───┬───┐
+│   │   │   │
+├───┼───┤ 1 │
+│   │   │   │
+├───┴───┴───┤
+│     2     │
+└───────────┘
+}
+’
+[+разобраться, почему выдаётся ошибка Unknown formatting character inside table row at line 3 column 1 — должно указываться положение относительно начала файла, а не начала таблицы+{ясно теперь: положение отсчитывалось от начала записи 23:33 02.09.2016} fixed at 08b07436aeff9a7265973199974671949f5759ed теперь всё работает как надо (выдаётся ошибка Unknown formatting character inside table row at line 260 column 1)]
+]]]--><br />
+</div>
+</div>
+<br />
+<i><a href="https://gist.github.com/alextretyak/4d0cbab44fd2605febcbbd870f997b2f">Исходник данной статьи</a><!--[[[, как можно догадаться,]]]--> написан на пк-разметке. Преобразован к формату habrahabr HTML посредством <a href="https://pypi.python.org/pypi/pqmarkup">реализации на Python</a> (c флагом командной строки <pre style="display: inline">--habrahabr-html</pre>).</i><br />
+<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">P.S.<br /></span><div class="spoiler_text" style="display:none">Причины (впрочем, достаточно субъективные), почему я выбрал именно символы <pre style="display: inline">‘’</pre> (а не `´ или, скажем, «» или <pre style="display: inline">“”</pre>):<br />
+<ol>
+<li>Они достаточно приятно выглядят (в соответствующем шрифте <span class="sq"><span class="sq_brackets">[</span>например, Courier New<span class="sq_brackets">]</span></span>). На мой взгляд, лучше, чем «» или ‹›.</li>
+<li><!--[[[Это ~‘абсолютно’ парные символы —]]]-->Они идут подряд друг за другом в любой кодировке (в отличие от `´ или «» или ‹›) <span class="sq"><span class="sq_brackets">[</span>также как и <pre style="display: inline">“”</pre><span class="sq_brackets">]</span></span>.</li>
+<li>Почему не <pre style="display: inline">“”</pre> <!--[[[кстати, Alt+0147 на цифровой клавиатуре эти цифры расположены ещё более удачно — 4 в ряд]]]--> — в русских текстах парным символу <pre style="display: inline">“</pre> является <pre style="display: inline">„</pre> (<a href="http://www.artlebedev.ru/kovodstvo/sections/62/" title="(смотри также [http://www.artlebedev.ru/kovodstvo/sections/104/])">Экранная типографика. Кавычки</a>).</li>
+<li><span class="spoiler_title" onclick="return spoiler2(this, event)">А ещё мне коды[/годы] этих символов нравятся...<br /></span><div class="spoiler_text" style="display:none"><abbr title="[http://unicode.org/Public/UNIDATA/NamesList.txt]">201? и 201¿</abbr></div>
+</li>
+</ol>
+<br />
+<!--[[[‘‘‘‘]]]-->Один существенный минус символов кавычек <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> в том, что Microsoft Word любит автоматически вставлять их при вводе символа апострофа '<!--[[[ {и в существующих документах частенько нарушена парность кавычек #‘‘’’, а впрочем парность таких “” (и даже таких «») также нарушается в некоторых книжках в doc-формате[[[[, и ещё некоторые любят использовать такую „ открывающую кавычку вместо такой “]]]]}]]]-->, а также в том, что символ закрывающей одиночной кавычки <pre style="display: inline">’</pre> <a href="https://en.wikipedia.org/wiki/Apostrophe#Unicode" title="RIGHT SINGLE QUOTATION MARK is the preferred character to use for apostrophe">согласно</a> текущему стандарту Юникод является предпочтительным символом в качестве знака апострофа, и во <!--[[[некоторых]]]-->многих документах и веб-страницах на английском языке символ <pre style="display: inline">’</pre> действительно используется в качестве апострофа (например так: <pre style="display: inline">Don’t</pre>), в том числе — в <a href="https://docs.python.org/devguide/documenting.html">сгенерированной документации к Python</a>, впрочем в HTML-коде там <s>используется</s><!--[[[точнее, [[[совсем ]]]]]]--><a href="http://web.archive.org/web/20170711160221/https://docs.python.org/devguide/documenting.html">ещё недавно использовался</a> HTML entity <pre style="display: inline">&amp;#8217;</pre>, а в исходных <a href="https://github.com/python/devguide/blob/master/documenting.rst">rst-файлах документации</a> используется обычный апостроф ' — так что и html (при использовании <pre style="display: inline">&amp;#8217;</pre>) и rst-файлы <!--[[[в этом случае ]]]-->можно заключать в <pre style="display: inline">‘</pre>такие<pre style="display: inline">’</pre> кавычки без проблем <span class="sq"><span class="sq_brackets">[</span>и, к <!--[[[счастью/]]]-->слову, наиболее известные <span class="sq"><span class="sq_brackets">[</span>мне<span class="sq_brackets">]</span></span><!--[[[/популярные[[[http://www.typograf.ru/flog/]]]]]]--> <abbr title="http://www.typograf.ru/, http://rmcreative.ru/typograph/, http://www.artlebedev.ru/tools/typograf/">типографы</abbr> (за <abbr title="http://www.artlebedev.ru/tools/reformator/">редким</abbr> исключением) вставляют HTML-entity <pre style="display: inline">&amp;rsquo;</pre> <span class="sq"><span class="sq_brackets">[</span>или <pre style="display: inline">&amp;#146;</pre> или <pre style="display: inline">&amp;#39;</pre> или <pre style="display: inline">&amp;#8217;</pre><span class="sq_brackets">]</span></span>, а не непосредственно сам символ закрывающей кавычки <pre style="display: inline">’</pre>, а если посмотреть на крупнейшие англоязычные новостные ресурсы, то можно заметить, что <!--[[[-‘практически везде’]]]-->на <abbr title="news.google.com, cnn.com, abcnews.go.com, bbc.com">многих из них</abbr> в качестве апострофа используется просто символ апострофа <pre style="display: inline">'</pre> (вопреки<!--[[[ неразумной [на мой взгляд]]]]--> рекомендации Unicode Consortium)<!--[[[и Unicode Consortium'у следует[?], ‘как я считаю’[‘не то, чтобы я продвигаю пк-разметку, я просто за здравый смысл — посмотрите как много ввели в Unicode символов похожих внешне, но различных по смыслу, а тут вдруг решили [просто из-за внешнего сходства?] сэкономить и задействовать символ парной кавычки в качестве апострофа[[[{и привело это к тому, что в Chrome при поиске символа ' находятся также ‘ и ’ ...даже не знаю, плохо это или хорошо ☺☻}]]]’], перестать рекомендовать закрывающую кавычку в качестве [предпочтительного символа для] апострофа, а символу апострофа следует вернуть его изначальное/оригинальное[https://en.wikipedia.org/wiki/Apostrophe ‘Many earlier (pre-1985) computer displays and printers rendered the ASCII apostrophe as a typographic apostrophe’] отображение до 1985 года (кроме шрифтов для программирования :)(: то, как выглядят кавычки ‘’ и апостроф ' в шрифте Courier New[http://terkel.jp/archives/2009/11/courier-courier-new-and-consolas/] я считаю наиболее правильным/приемлимым вариантом/способом отображения этих символов в программных исходных текстах)]]]--><span class="sq_brackets">]</span></span>, но если есть такая необходимость, то пк-разметка позволяет вставить непарную открывающую <pre style="display: inline">‘</pre> и закрывающую <pre style="display: inline">’</pre> кавычку: так<pre style="display: inline"> `‘` </pre><!--[[[’]]]-->или так <pre style="display: inline">'‘’</pre> (смотри <a href="https://pqmarkup.github.io/ru/syntax">Дополнительные возможности форматирования. "Сырой"\Raw HTML</a>).<br />
+<br />
+Ещё один минус <span class="sq"><span class="sq_brackets">[</span>символов кавычек <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre><span class="sq_brackets">]</span></span> — <abbr title="трудно определить/различить с первого взгляда открывающую и закрывающую кавычку">неоднозначность</abbr> отображения символов <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> во <!--[[[некоторых/]]]-->многих популярных шрифтах. В частности, в Consolas, используемом в GitHub и Bitbucket. И вообще, символы парных кавычек в разных шрифтах <!--[[[рисуются/]]]-->выглядят по-разному (в том числе и в моноширных шрифтах для программирования):<br />
+<img src="https://habrastorage.org/webt/59/ca/ec/59caec0c17a1e634312422.png" /><!--[[[archived:{[http://web.archive.org/web/20171118111418/https://hsto.org/webt/59/ca/ec/59caec0c17a1e634312422.png][http://archive.li/WJ8t7][http://www.webcitation.org/6v4470kfo]}]]]--><!--[[[
+90%
+20pt 12pt
+‘ ’ — Tahoma
+‘ ’ — Verdana
+‘ ’ — Courier New
+‘ ’ — Consolas
+‘ ’ — Times New Roman
+‘ ’ — Arial
+‘ ’ — Calibri
+]]]--><br />
+<span class="sq"><span class="sq_brackets">[</span>На мой взгляд, это просто показывает, что в целом отсутствует чёткое/однозначное представление о том, как должны выглядеть эти символы<!--[[[у создателей этих шрифтов не было чёткого представления о том, как должны выглядеть символы одиночных парных кавычек[[[ в шрифте для программирования]]]]]]-->.<span class="sq_brackets">]</span></span><br />
+<br />
+(Кстати, на Хабре<!--[[[, по счастливой случайности,]]]--> символы одиночных парных кавычек отображались <abbr title="под этим я подразумеваю возможность легко однозначно определить/отличить символ открывающей кавычки от закрывающей">вполне приемлимо</abbr> (по крайней мере, в Windows) за счёт использования Verdana для основного текста и <abbr title="так как Menlo и Monaco не установлены на большинстве компьютеров">Courier New</abbr> для кода, но <abbr title="я обнаружил это 15 сентября 2017 [точнее определить можно через web.archive.org]">несколько месяцев назад</abbr> шрифт для основного текста статей поменяли на Arial, из-за чего пришлось немного подправлять статью — заменять ‘ и ’ на <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> (в pq:<pre style="display: inline"> `‘` </pre><!--[[[’]]]-->и <code>`’`</code>).)<br />
+</div>
+
+</td></tr></table>
+</body>
+</html>
