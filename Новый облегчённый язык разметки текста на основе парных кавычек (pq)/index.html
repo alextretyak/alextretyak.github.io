@@ -55,9 +55,7 @@ pre, code {font-family: 'Courier New'; line-height: normal}
 ul, ol {margin: 7px 0 0 0;}
 ul li, ol li {padding: 7px 0;}
 ul li:first-child, ol li:first-child {padding-top   : 0;}
-/*
-ul li: last-child, ol li: last-child {padding-bottom: 0;} /*not working? WTF? (оставлю эту строчку здесь до тех пор, пока не исправят CSS [не собираюсь привыкать к правилам, которые противоречат здравому смыслу])*/
-ul  li:last-child, ol  li:last-child {padding-bottom: 0;} /*this line works correctly*/
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
 table table {margin: 1.5em 0; border-collapse: collapse}
 table table th, table table td {padding: .3em; border: 1px solid #ccc}
 span.spoiler_title {
@@ -83,7 +81,7 @@ div.spoiler_text {
 ]]]-->Я не могу объяснить, как мне вообще взбрела в голову идея такого языка разметки, но то, что получилось в итоге — весьма... <!--[[[эм, ]]]-->занятно.<br />
 Надежды на реальное практическое использование кем-либо этой <abbr title="(: шутки :)">штуки</abbr> у меня, конечно, нет, но некоторые идеи, использованные в этом языке разметки, вполне могут дать пищу для размышлений и как-то поспособствовать развитию других существующих или новых языков.<br />
 Итак, перейду к описанию самого языка. <span class="sq"><span class="sq_brackets">[</span>Если кто-то вдруг не понял, о чём вообще идёт речь, то к <a href="https://ru.wikipedia.org/wiki/Язык_разметки#.D0.9E.D0.B1.D0.BB.D0.B5.D0.B3.D1.87.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D1.8F.D0.B7.D1.8B.D0.BA.D0.B8_.D1.80.D0.B0.D0.B7.D0.BC.D0.B5.D1.82.D0.BA.D0.B8">облегчённым языкам разметки</a> относятся Markdown, BBCode, вики-разметка и т.п.<span class="sq_brackets">]</span></span><br />
-<img src="https://habrastorage.org/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png" title="[[[archived:{[http://web.archive.org/web/20171118110653/https://hsto.org/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png][http://archive.li/YAzNw][http://www.webcitation.org/6v43fNoY4][https://megalodon.jp/2017-1118-2007-16/https://habrastorage.org:443/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png]} <- https://avatars2.githubusercontent.com/u/22426167?v=4&amp;s=200]]]" /><cut /><br />
+<img src="https://habrastorage.org/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png" title="" /><cut /><br />
 Данная разметка основана на одиночных парных кавычках — символах <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> (вопрос выбора именно этих символов разъясняется ниже в P.S.), поэтому пока что я остановился на таком варианте названия: <i>пк-разметка</i> или <i>pqmarkup</i> (paired quotes markup).<br />
 <br />
 <h3>Как же эти кавычки набирать на клавиатуре?</h3>
@@ -170,8 +168,8 @@ Alt &amp; 0:: SendInput {’}
 <tr><td>P‘https://.../blue_circle.png’[http://address ‘текст всплывающей подсказки’]</td><td>&lt;a href="http://address" title="текст всплывающей подсказки">&lt;img src="https://.../blue_circle.png" />&lt;/a></td><td><a href="http://address" title="текст всплывающей подсказки"><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></a></td></tr>
 <tr><th colspan="3">Цвет текста</th></tr>
 <tr><td colspan="3"><sub>Цвет задаётся в формате #ККЗЗСС (Красный, Зелёный, Синий) посредством шестнадцатеричных цифр (можно использовать кириллицу: абсдеф/АБСДЕФ является аналогом abcdef/ABCDEF) или в формате КЗС посредством цифр <abbr title="считаю, что для оформления большинства статей 9 уровней/градаций для компонент цвета вполне достаточно , а максимум 8 (а не 9) выбран для того, чтобы можно было задавать серый цвет (444)">от 0 до 8</abbr>.</sub></td></tr>
-<tr><td>C(#ff0000)‘красный текст’</td><td>&lt;span style="color:#ff0000;">красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png" title="[[[archived:{[http://web.archive.org/web/20171118110411/https://hsto.org/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png][http://archive.li/EPSGx][http://www.webcitation.org/6v42ugqVW][https://megalodon.jp/2017-1118-1957-54/https://habrastorage.org:443/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png]}]]]" /></td></tr>
-<tr><td>C(800)‘тоже красный текст’</td><td>&lt;span style="color:#FF0000;">тоже красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png" title="[[[archived:{[http://web.archive.org/web/20171118110306/https://hsto.org/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png][http://archive.li/lswll][http://www.webcitation.org/6v43vSpmd][https://megalodon.jp/2017-1118-2002-19/https://habrastorage.org:443/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png]}]]]" /></td></tr>
+<tr><td>C(#ff0000)‘красный текст’</td><td>&lt;span style="color:#ff0000;">красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png" title="" /></td></tr>
+<tr><td>C(800)‘тоже красный текст’</td><td>&lt;span style="color:#FF0000;">тоже красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png" title="" /></td></tr>
 <tr><td>C(000)‘чёрный текст’</td><td>&lt;span style="color:#000000;">чёрный текст&lt;/span></td><td><span style="color:#000000;">чёрный текст</span></td></tr>
 <tr><th colspan="3">Таблицы</th></tr>
 <tr><td><pre style="display: inline">Т‘
