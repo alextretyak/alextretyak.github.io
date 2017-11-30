@@ -39,11 +39,16 @@ a:hover {
     text-decoration: underline;
     color: #4d7285;
 }
-h3 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-size: 137.5%;
     font-weight: 400;
 }
+h1 {font-size: 190%; line-height: 120%;}
+h2 {font-size: 160%;}
+h3 {font-size: 137.5%;}
+h4 {font-size: 120%;}
+h5 {font-size: 110%;}
+h6 {font-size: 100%;}
 td {text-align: justify; /*font-family: Tahoma, sans-serif*/}
 span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
 span.sq_brackets {color: #DDD}
@@ -52,12 +57,12 @@ span.cu {background-color: #F7F7FF}
 abbr {text-decoration: none; border-bottom: 1px dotted}
 pre {margin: 0}
 pre, code {font-family: 'Courier New'; line-height: normal}
-ul, ol {margin: 7px 0 0 0;}
+ul, ol {margin: 11px 0 7px 0;}
 ul li, ol li {padding: 7px 0;}
 ul li:first-child, ol li:first-child {padding-top   : 0;}
 ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
-table table {margin: 1.5em 0; border-collapse: collapse}
-table table th, table table td {padding: .3em; border: 1px solid #ccc}
+table table {margin: 9px 0; border-collapse: collapse}
+table table th, table table td {padding: 6px 13px; border: 1px solid #ddd}
 span.spoiler_title {
     color: #548eaa;
     cursor: pointer;
@@ -68,21 +73,32 @@ div.spoiler_text {
     margin: 5px;
     padding: 3px;
 }
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
 </style>
 </head>
 <body>
 <table width="55%" align="center"><tr><td>
+<h1>Новый облегчённый язык разметки текста на основе <!--[[[одиночных ]]]-->парных кавычек (pq)</h1>
+<br />
+<br />
 <!--[[[
 [[[Поток: Разработка]]]
 [[[Хабы: Python, HTML]]]
 [[[Заголовок: Новый облегчённый язык разметки текста на основе [[[одиночных ]]]парных кавычек (pq)]]]
 [[[Метки: разметка текста, русская qазметка]]]
 
-]]]-->Я не могу объяснить, как мне вообще взбрела в голову идея такого языка разметки, но то, что получилось в итоге — весьма... <!--[[[эм, ]]]-->занятно.<br />
-Надежды на реальное практическое использование кем-либо этой <abbr title="(: шутки :)">штуки</abbr> у меня, конечно, нет, но некоторые идеи, использованные в этом языке разметки, вполне могут дать пищу для размышлений и как-то поспособствовать развитию других существующих или новых языков.<br />
+]]]-->Встречайте<!--[[[/Принимайте]]]--> такой, несколько необычный<!--[[[ и неожиданный]]]-->, новогодний подарочек.<br />
+Я не могу объяснить, <!--[[[как мне вообще взбрела в голову]]]-->откуда пришла идея такого языка разметки, но то, что получилось в итоге — весьма... <!--[[[эм, ]]]-->занятно.<br />
+Не слишком-то рассчитываю на широкое практическое <!--[[[использование/]]]-->применение <!--[[[кем-либо ]]]-->этой <abbr title="(: шутки :)">штуки</abbr>, но некоторые идеи, использованные в этом языке разметки, вполне могут дать пищу для размышлений и как-то поспособствовать развитию других существующих или новых языков.<br />
 Итак, перейду к описанию самого языка. <span class="sq"><span class="sq_brackets">[</span>Если кто-то вдруг не понял, о чём вообще идёт речь, то к <a href="https://ru.wikipedia.org/wiki/Язык_разметки#.D0.9E.D0.B1.D0.BB.D0.B5.D0.B3.D1.87.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D1.8F.D0.B7.D1.8B.D0.BA.D0.B8_.D1.80.D0.B0.D0.B7.D0.BC.D0.B5.D1.82.D0.BA.D0.B8">облегчённым языкам разметки</a> относятся Markdown, BBCode, вики-разметка и т.п.<span class="sq_brackets">]</span></span><br />
 <img src="https://habrastorage.org/webt/mr/yi/wy/mryiwyz_inpkwgw32ujpdsfnmzs.png" title="" /><cut /><br />
 Данная разметка основана на одиночных парных кавычках — символах <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> (вопрос выбора именно этих символов разъясняется ниже в P.S.), поэтому пока что я остановился на таком варианте названия: <i>пк-разметка</i> или <i>pqmarkup</i> (paired quotes markup).<br />
+<br />
 <br />
 <h3>Как же эти кавычки набирать на клавиатуре?</h3>
 <br />
@@ -99,7 +115,8 @@ Alt &amp; 0:: SendInput {’}
 ]]]--><!--[[[
 ‘Инструкция по установке AutoHotkey и редактированию его настроек для непрограммистов’{
 [-написать инструкцию-]
-}](для статьи на Хабре не нужна — предполагается, что аудитория читателей Хабра может догадаться как делать такое самостоятельно)]]-->Также в Windows можно использовать без <!--[[[подготовительных/]]]-->дополнительных настроек сочетание клавиш <abbr title="в русской раскладке работает только через левый Alt">Alt</abbr>+0145 (на цифровой клавиатуре) для открывающей кавычки <pre style="display: inline">‘</pre> и Alt+0146 для закрывающей <pre style="display: inline">’</pre> (правда, работает это <abbr title="например, не работает в Microsoft Word">не во всех программах</abbr>, а также требует определённого состояния NumLock).<br />
+}](для статьи на Хабре не нужна — предполагается, что аудитория читателей Хабра может догадаться как делать такое самостоятельно)]]--><br />
+Также в Windows можно использовать без <!--[[[подготовительных/]]]-->дополнительных настроек сочетание клавиш <abbr title="в русской раскладке работает только через левый Alt">Alt</abbr>+0145 (на цифровой клавиатуре) для открывающей кавычки <pre style="display: inline">‘</pre> и Alt+0146 для закрывающей <pre style="display: inline">’</pre> (правда, работает это <abbr title="например, не работает в Microsoft Word">не во всех программах</abbr>, а также требует определённого состояния NumLock).<br />
 <span class="spoiler_title" onclick="return spoiler2(this, event)">Визуально на цифровой клавиатуре эти цифры расположены очень удачно:<br /></span><div class="spoiler_text" style="display:none"><pre>
 ┌───┬───┐
 │ 4 │ 5 │
@@ -117,6 +134,7 @@ Alt &amp; 0:: SendInput {’}
 <h2>Синтаксис пк-разметки</h2>
 <br />
 <h3><!--[[[Стилизация/]]]-->Оформление текста</h3>
+<br />
 <table>
 <tr><td><pre style="display: inline">*‘жирный’</pre></td><td><b>жирный</b><!--[[[‘.’[‘символ * похож на букву ж’]]]]--></td></tr>
 <tr><td><pre style="display: inline">_‘подчёркнутый’</pre></td><td><u>подчёркнутый</u></td></tr>
@@ -125,6 +143,7 @@ Alt &amp; 0:: SendInput {’}
 </table>
 <i>Примечание:</i><br />
 Вот так не работает: <pre style="display: inline">~*‘жирный курсив’</pre> (будет просто ~<b>жирный</b>), пишите так: <pre style="display: inline">~‘*‘</pre><i><b>жирный курсив</b></i><pre style="display: inline">’’</pre> или так: <pre style="display: inline">*‘~‘</pre><b><i>жирный курсив</i></b><pre style="display: inline">’’</pre> (<abbr title="чтобы не злоупотреблять форматированием и чтобы лучше было видно в исходной пк-разметке такие места">так и задумано</abbr>).<br />
+<br />
 <br />
 <h3>Ссылки и всплывающие подсказки</h3>
 <br />
@@ -142,11 +161,13 @@ Alt &amp; 0:: SendInput {’}
 </table>
 </div>
 <br />
+<br />
 <h3>Заголовки, картинки, цвет и таблицы</h3>
+<br />
 <table>
 <tr><td>Н (русская)</td><td>H (английская)</td><td>Название заголовка\Header</td></tr>
 <tr><td>Р (русская)</td><td>P (английская)</td><td><!--[[[изобРажение/каРтинка/]]]-->Рисунок\Picture <abbr title="предполагается расширить возможности P до аналога тега <picture> из HTML 5.1">[почему не I(image)]</abbr></td></tr>
-<tr><td>С (русская)</td><td>C (английская)</td><td>цвет(Свет)\Color</td></tr>
+<tr><td>С (русская)</td><td>C (английская)</td><td><abbr title="латинская буква `С` произносится как `цэ`">ц</abbr>вет(Свет)\Color</td></tr>
 <tr><td>Т (русская)</td><td>T (английская)</td><td>Таблица\Table</td></tr>
 </table>
 <i>Примеры:</i><br />
@@ -168,9 +189,12 @@ Alt &amp; 0:: SendInput {’}
 <tr><td>P‘https://.../blue_circle.png’[http://address ‘текст всплывающей подсказки’]</td><td>&lt;a href="http://address" title="текст всплывающей подсказки">&lt;img src="https://.../blue_circle.png" />&lt;/a></td><td><a href="http://address" title="текст всплывающей подсказки"><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></a></td></tr>
 <tr><th colspan="3">Цвет текста</th></tr>
 <tr><td colspan="3"><sub>Цвет задаётся в формате #ККЗЗСС (Красный, Зелёный, Синий) посредством шестнадцатеричных цифр (можно использовать кириллицу: абсдеф/АБСДЕФ является аналогом abcdef/ABCDEF) или в формате КЗС посредством цифр <abbr title="считаю, что для оформления большинства статей 9 уровней/градаций для компонент цвета вполне достаточно , а максимум 8 (а не 9) выбран для того, чтобы можно было задавать серый цвет (444)">от 0 до 8</abbr>.</sub></td></tr>
-<tr><td>C(#ff0000)‘красный текст’</td><td>&lt;span style="color:#ff0000;">красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/653/62d/360/65362d3604c14c63bb2cd7baeef74389.png" title="" /></td></tr>
-<tr><td>C(800)‘тоже красный текст’</td><td>&lt;span style="color:#FF0000;">тоже красный текст&lt;/span></td><td><img src="https://habrastorage.org/web/b2c/822/f33/b2c822f3361b4bfa9e9cd85dcd798638.png" title="" /></td></tr>
-<tr><td>C(000)‘чёрный текст’</td><td>&lt;span style="color:#000000;">чёрный текст&lt;/span></td><td><span style="color:#000000;">чёрный текст</span></td></tr>
+<tr><td rowspan="2">C(#ff0000)‘красный текст’</td><td>&lt;span style="color:#ff0000;">красный текст&lt;/span></td><td rowspan="2"><span style="color:#ff0000;">красный текст</span></td></tr>
+<tr><td>&lt;font color="#ff0000;">красный текст&lt;/font></td></tr>
+<tr><td rowspan="2">C(800)‘тоже красный текст’</td><td>&lt;span style="color:#FF0000;">тоже красный текст&lt;/span></td><td rowspan="2"><span style="color:#FF0000;">тоже красный текст</span></td></tr>
+<tr><td>&lt;font color="#FF0000;">тоже красный текст&lt;/font></td></tr>
+<tr><td rowspan="2">C(000)‘чёрный текст’</td><td>&lt;span style="color:#000000;">чёрный текст&lt;/span></td><td rowspan="2"><span style="color:#000000;">чёрный текст</span></td></tr>
+<tr><td>&lt;font color="#000000;">чёрный текст&lt;/font></td></tr>
 <tr><th colspan="3">Таблицы</th></tr>
 <tr><td><pre style="display: inline">Т‘
 Н‘‘A’ ‘B’ ‘C’’
@@ -247,9 +271,11 @@ Alt &amp; 0:: SendInput {’}
 </table>
 </div>
 <br />
+<br />
 <h3>Комментарии</h3>
 <br />
 [[[комментарий/<abbr title="А что? :) Очень удобно таким способом прятать в исходном тексте лишние слова/мысли, которые жалко удалять.">контейнер для воды (:</abbr>]]]<br />
+<br />
 <br />
 <h3><a href="https://pqmarkup.github.io/ru/syntax">Полное описание синтаксиса форматирования.</a></h3>
 <br />
@@ -277,7 +303,8 @@ A[]B[]C
 [[]]1[]2[]3
 [-Т]]</pre>
 (Закрывающий тег <pre style="display: inline">[-Т]</pre> можно опустить.)<br />
-Но потом я вспомнил, что <!--[[[много/]]]-->несколько вариантов выбора для одного и того же форматирования — это то, что мне <abbr title="ещё мне не нравится, что нельзя вставить блок кода в цитату, а также отсутствие поддержки <abbr title='...'> (прецедент[https://github.com/JuliaLang/julia/issues/2097#issuecomment-339924750 ])">не нравится в Markdown</abbr> (например: <pre style="display: inline">__так__</pre> или <pre style="display: inline">**так**</pre>), и я решил, что оставлять два варианта форматирования в пк-разметке (<pre style="display: inline">~‘...’</pre> и <pre style="display: inline">[[~]...]</pre>) будет неправильно. А значит, имеет смысл оставить только одну форму записи — с кавычками <pre style="display: inline">‘’</pre>, так как она менее конфликтующая и является первой/основной идеей, положившей начало этой разметки текста <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display:none">а то, что набирать символы кавычек <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> непривычно — я считаю, это не так страшно, так как <span class="sq"><span class="sq_brackets">[</span>с моей точки зрения<span class="sq_brackets">]</span></span> важнее читаемость разметки и её <abbr title="относящиеся к восприятию [информации]">когнитивные</abbr> характеристики (легко понять/запомнить правила разметки, легко<!--[[[/приятно]]]--> читать/воспринимать размеченный текст), а также <!--[[[минимизация/]]]-->снижение вероятности возникновения конфликтов (когда простой текст или формула <span class="sq"><span class="sq_brackets">[</span>ошибочно/<span class="sq_brackets">]</span></span>ненамеренно трактуется как разметка) и избежание необходимости что-то экранировать (а то ведь часто можно и пропустить/не заметить такие ошибки — когда размеченный текст преобразовался немного не в то, что задумывалось)</span><span class="cu_brackets_b">}</span></span>.<br />
+<br />
+Но потом я вспомнил, что <!--[[[много/]]]-->несколько вариантов выбора для одного и того же форматирования — это то, что мне <abbr title="ещё мне не нравится отсутствие поддержки <abbr title='...'>, а также невозможность вставить цитату в элемент списка (прецедент[https://github.com/JuliaLang/julia/issues/2097#issuecomment-339924750 ])">не нравится в Markdown</abbr> (например: <pre style="display: inline">__так__</pre> или <pre style="display: inline">**так**</pre>), и я решил, что оставлять два варианта форматирования в пк-разметке (<pre style="display: inline">~‘...’</pre> и <pre style="display: inline">[[~]...]</pre>) будет неправильно. А значит, имеет смысл оставить только одну форму записи — с кавычками <pre style="display: inline">‘’</pre>, так как она менее конфликтующая и является первой/основной идеей, положившей начало этой разметки текста <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display:none">а то, что набирать символы кавычек <pre style="display: inline">‘</pre> и <pre style="display: inline">’</pre> непривычно — я считаю, это не так страшно, так как <span class="sq"><span class="sq_brackets">[</span>с моей точки зрения<span class="sq_brackets">]</span></span> важнее читаемость разметки и её <abbr title="относящиеся к восприятию [информации]">когнитивные</abbr> характеристики (легко понять/запомнить правила разметки, легко<!--[[[/приятно]]]--> читать/воспринимать размеченный текст), а также <!--[[[минимизация/]]]-->снижение вероятности возникновения конфликтов (когда простой текст или формула <span class="sq"><span class="sq_brackets">[</span>ошибочно/<span class="sq_brackets">]</span></span>ненамеренно трактуется как разметка) и избежание необходимости что-то экранировать (а то ведь часто можно и пропустить/не заметить такие ошибки — когда размеченный текст преобразовался немного не в то, что задумывалось)</span><span class="cu_brackets_b">}</span></span>.<br />
 <br />
 Определившись с выбором в пользу кавычек, сначала я хотел сделать такой разделитель строк — <pre style="display: inline">‘’</pre> (по аналогии с <pre style="display: inline">[]</pre>), но быстро одумался (ведь тогда возникает проблема с пустыми ячейками в самой таблице) и пришёл к нынешней форме записи:<br />
 <pre style="display: inline">Т‘
@@ -291,7 +318,7 @@ A[]B[]C
 ‘1’ ‘2’ ‘3’
 ’’
 </pre><br />
-<sub><span class="sq"><span class="sq_brackets">[</span>Разумеется, эта форма записи не самая приятная для набора и я немало думал над тем, возможно ли её как-то упростить (или хотя бы дать возможность альтернативной более простой формы записи для таблиц, как в <a href="https://github.github.com/gfm/#tables-extension-">GitHub Flavored Markdown</a> или в <a href="https://habrahabr.ru/info/help/markdown/">Habrahabr Flavored Markdown</a>), но решил остановиться на нынешней форме записи, так как она итак достаточно лёгкая (по сравнению с HTML &lt;table>) и при этом имеет неоспоримое преимущество <span class="sq"><span class="sq_brackets">[</span>перед более простой формой записи<span class="sq_brackets">]</span></span> — возможность включать<!--[[[/вставлять]]]--> в ячейку таблицы всё что угодно (включая любые другие <!--[[[блоки/]]]-->элементы разметки и даже вложенные таблицы), а также нынешняя форма записи даёт возможность использовать пробелы в начале и в конце строки любой ячейки таблицы (возможность спорная, но может пригодиться для <!--[[[преобразования/представления/]]]-->экспорта таблиц баз данных<!--[[[для конвертирования документов Microsoft Word и подобных в пк-разметку]]]-->).<span class="sq_brackets">]</span></span></sub><br />
+<sub><span class="sq"><span class="sq_brackets">[</span>Разумеется, эта форма записи не самая приятная для набора и я немало думал над тем, возможно ли её как-то упростить (или хотя бы дать возможность альтернативной более простой формы записи для таблиц, как в <a href="https://github.github.com/gfm/#tables-extension-">GitHub Flavored Markdown</a> или в <a href="https://habrahabr.ru/info/help/markdown/">Habrahabr Flavored Markdown</a> <span class="sq"><span class="sq_brackets">[</span>к слову сказать, в большинстве реализаций Markdown не поддерживаются таблицы без заголовков<span class="sq_brackets">]</span></span>), но решил остановиться на нынешней форме записи, так как она итак достаточно лёгкая (по сравнению с HTML &lt;table>) и при этом имеет неоспоримое преимущество <span class="sq"><span class="sq_brackets">[</span>перед более простой формой записи<span class="sq_brackets">]</span></span> — возможность включать<!--[[[/вставлять]]]--> в ячейку таблицы всё что угодно (включая любые другие <!--[[[блоки/]]]-->элементы разметки и даже вложенные таблицы), а также нынешняя форма записи даёт возможность использовать пробелы в начале и в конце строки любой ячейки таблицы (возможность спорная, но может пригодиться для <!--[[[преобразования/представления/]]]-->экспорта таблиц баз данных<!--[[[для конвертирования документов Microsoft Word и подобных в пк-разметку]]]-->).<span class="sq_brackets">]</span></span></sub><br />
 <br />
 <span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот история/‘как я пришёл к’ нынешней форме записи для объединения ячеек таблицы)<br /></span><div class="spoiler_text" style="display:none"><sub><sub>...не, решил спрятать в комментарий и не включать в статью<!--[[[ {в непричёсанном виде выглядит некрасиво {из-за отсутствия чёткого разделения где текст, а где моноширный код[[[, а также из-за межстрочного интервала в браузерах (речь про блоки с кодом), при котором в таблицах в псевдографике вертикальные линии получаются пунктирными (вроде `line-height: normal` полностью исправляет эту проблему {эх... если бы всё было так просто:
 Такой HTML-код:
