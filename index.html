@@ -5,7 +5,7 @@
 <script type="text/javascript">
 function spoiler(element, event)
 {
-    if (event.target.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
         return;
     var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
     e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style

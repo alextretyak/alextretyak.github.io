@@ -5,7 +5,7 @@
 <script type="text/javascript">
 function spoiler(element, event)
 {
-    if (event.target.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
         return;
     var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
     e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
@@ -177,11 +177,11 @@ Alt &amp; 0:: SendInput {’}
 <span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display: none"><table>
 <tr><th>Пк-разметка</th><th>HTML</th><th>Как выглядит</th></tr>
 <tr><th colspan="3">Заголовки\Headers</th></tr>
-<tr><td>H‘заголовок’</td><td rowspan="2">&lt;h3>заголовок&lt;/h3></td><td rowspan="2"><h3>заголовок</h3></td></tr>
-<tr><td>H(0)‘заголовок’</td></tr>
-<tr><td>H(1)‘заголовок’</td><td rowspan="2">&lt;h2>заголовок&lt;/h2></td><td rowspan="2"><h2>заголовок</h2></td></tr>
-<tr><td>H(+1)‘заголовок’</td></tr>
-<tr><td>H(-1)‘заголовок’</td><td>&lt;h4>заголовок&lt;/h4></td><td><h4>заголовок</h4></td></tr>
+<tr><td>H‘Заголовок’</td><td rowspan="2">&lt;h3>Заголовок&lt;/h3></td><td rowspan="2"><h3>Заголовок</h3></td></tr>
+<tr><td>H(0)‘Заголовок’</td></tr>
+<tr><td>H(1)‘Заголовок’</td><td rowspan="2">&lt;h2>Заголовок&lt;/h2></td><td rowspan="2"><h2>Заголовок</h2></td></tr>
+<tr><td>H(+1)‘Заголовок’</td></tr>
+<tr><td>H(-1)‘Заголовок’</td><td>&lt;h4>Заголовок&lt;/h4></td><td><h4>Заголовок</h4></td></tr>
 <tr><th colspan="3">Изображения/картинки\Pictures</th></tr>
 <tr><td>P‘https://.../blue_circle.png’</td><td>&lt;img src="https://.../blue_circle.png" /></td><td><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></td></tr>
 <tr><td>P‘https://.../blue_circle.png’[http://address]</td><td>&lt;a href="http://address">&lt;img src="https://.../blue_circle.png" />&lt;/a></td><td><a href="http://address"><img src="https://bitbucket.org/pqmarkup/pqmarkup/raw/default/docs/images/blue_circle.png" /></a></td></tr>
