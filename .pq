@@ -54,7 +54,7 @@
 . ‘Мои новые проекты.’{
 . pqmarkup\пк-разметка[http://pqmarkup.org/ru].
 . thindf[http://thindf.org/ru].
-. [[[новый ]]]‘Язык программирования 11l’[http://11l-lang.org].
+. [[[новый ]]]‘Язык программирования 11l’[http://11l-lang.org/ru].
 }
 }
 
