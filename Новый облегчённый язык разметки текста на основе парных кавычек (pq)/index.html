@@ -95,7 +95,7 @@ img {vertical-align: middle;}
 </style>
 </head>
 <body>
-<table width="55%" align="center"><tr><td>
+<table style="max-width: 1024px" align="center"><tr><td>
 <h1>Новый облегчённый язык разметки текста на основе <!--[[[одиночных ]]]-->парных кавычек (pq)</h1>
 <br />
 <br />
@@ -129,7 +129,8 @@ Alt &amp; 0:: SendInput {’}
 [-написать инструкцию-]
 }](для статьи на Хабре не нужна — предполагается, что аудитория читателей Хабра может догадаться как делать такое самостоятельно)]]--><br />
 Также в Windows можно использовать без <!--[[[подготовительных/]]]-->дополнительных настроек сочетание клавиш <abbr title="в русской раскладке работает только через левый Alt">Alt</abbr>+0145 (на цифровой клавиатуре) для открывающей кавычки <pre class="inline_code">‘</pre> и Alt+0146 для закрывающей <pre class="inline_code">’</pre> (правда, работает это <abbr title="например, не работает в Microsoft Word">не во всех программах</abbr>, а также требует определённого состояния NumLock).<br />
-<span class="spoiler_title" onclick="return spoiler2(this, event)">Визуально на цифровой клавиатуре эти цифры расположены очень удачно:<br /></span><div class="spoiler_text" style="display: none"><pre>
+<span class="spoiler_title" onclick="return spoiler2(this, event)">Визуально на цифровой клавиатуре эти цифры расположены очень удачно:<br /></span><div class="spoiler_text" style="display: none">
+<pre>
 ┌───┬───┐
 │ 4 │ 5 │
 ├───┼───┘
@@ -163,7 +164,8 @@ Alt &amp; 0:: SendInput {’}
 Ссылка[http://адрес]<br />
 Ссылка[http://адрес ‘текст всплывающей подсказки’]<br />
 Текст[‘текст всплывающей подсказки’]<br />
-<span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display: none"><table>
+<span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display: none">
+<table>
 <tr><th>Пк-разметка</th><th>HTML</th><th>Как выглядит</th></tr>
 <tr><td>[http://address]</td><td>&lt;a href="http://address">http://address&lt;/a></td><td><a href="http://address">http://address</a></td></tr>
 <tr><td>ссылка[http://address]</td><td>&lt;a href="http://address">ссылка&lt;/a></td><td><a href="http://address">ссылка</a></td></tr>
@@ -187,7 +189,8 @@ Alt &amp; 0:: SendInput {’}
 Заголовок — Н‘Название заголовка’<br />
 Картинка — Р‘http://адрес_картинки’<br />
 Текст красным цветом — С(#фф0000)‘текст’<br />
-<span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display: none"><table>
+<span class="spoiler_title" onclick="return spoiler2(this, event)">Подробнее (больше примеров)<br /></span><div class="spoiler_text" style="display: none">
+<table>
 <tr><th>Пк-разметка</th><th>HTML</th><th>Как выглядит</th></tr>
 <tr><th colspan="3">Заголовки\Headers</th></tr>
 <tr><td>H‘Заголовок’</td><td rowspan="2">&lt;h3>Заголовок&lt;/h3></td><td rowspan="2"><h3>Заголовок</h3></td></tr>
@@ -296,7 +299,8 @@ Alt &amp; 0:: SendInput {’}
 <h3><a href="https://pqmarkup.github.io/ru/syntax">Полное описание синтаксиса форматирования.</a></h3>
 <br />
 <br />
-<span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот немного истории выбора тегов [для таблиц])<br /></span><div class="spoiler_text" style="display: none">Изначально я планировал альтернативный вариант задания тегов. Вот такой:<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот немного истории выбора тегов [для таблиц])<br /></span><div class="spoiler_text" style="display: none">
+Изначально я планировал альтернативный вариант задания тегов. Вот такой:<br />
 <pre class="inline_code">[[H]Header/Заголовок[-H]]</pre><br />
 или<br />
 <pre class="inline_code">[[H]Header/Заголовок[-]]</pre><br />
@@ -336,7 +340,8 @@ A[]B[]C
 </pre><br />
 <sub>(Разумеется, эта форма записи не самая приятная для набора и я немало думал над тем, возможно ли её как-то упростить (или хотя бы дать возможность альтернативной более простой формы записи для таблиц, как в <a href="https://github.github.com/gfm/#tables-extension-">GitHub Flavored Markdown</a> или в <a href="https://habrahabr.ru/info/help/markdown/">Habrahabr Flavored Markdown</a> <span class="sq"><span class="sq_brackets">[</span>к слову сказать, в большинстве реализаций Markdown не поддерживаются таблицы без заголовков<span class="sq_brackets">]</span></span>), но решил остановиться на нынешней форме записи, так как она итак достаточно лёгкая (по сравнению с HTML &lt;table>) и при этом имеет неоспоримое преимущество <span class="sq"><span class="sq_brackets">[</span>перед более простой формой записи<span class="sq_brackets">]</span></span> — возможность включать<!--[[[/вставлять]]]--> в ячейку таблицы всё что угодно (включая любые другие <!--[[[блоки/]]]-->элементы разметки и даже вложенные таблицы), а также нынешняя форма записи даёт возможность использовать пробелы в начале и в конце строки любой ячейки таблицы (возможность спорная, но может пригодиться для <!--[[[преобразования/представления/]]]-->экспорта таблиц баз данных<!--[[[для конвертирования документов Microsoft Word и подобных в пк-разметку]]]-->).)</sub><br />
 <br />
-<span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот история/‘как я пришёл к’ нынешней форме записи для объединения ячеек таблицы)<br /></span><div class="spoiler_text" style="display: none"><sub><sub>...не, решил спрятать в комментарий и не включать в статью<!--[[[ {в непричёсанном виде выглядит некрасиво {из-за отсутствия чёткого разделения где текст, а где моноширинный код[[[, а также из-за межстрочного интервала в браузерах (речь про блоки с кодом), при котором в таблицах в псевдографике вертикальные линии получаются пунктирными (вроде `line-height: normal` полностью исправляет эту проблему {эх... если бы всё было так просто:
+<span class="spoiler_title" onclick="return spoiler2(this, event)">(Если кому интересно, вот история/‘как я пришёл к’ нынешней форме записи для объединения ячеек таблицы)<br /></span><div class="spoiler_text" style="display: none">
+<sub><sub>...не, решил спрятать в комментарий и не включать в статью<!--[[[ {в непричёсанном виде выглядит некрасиво {из-за отсутствия чёткого разделения где текст, а где моноширинный код[[[, а также из-за межстрочного интервала в браузерах (речь про блоки с кодом), при котором в таблицах в псевдографике вертикальные линии получаются пунктирными (вроде `line-height: normal` полностью исправляет эту проблему {эх... если бы всё было так просто:
 Такой HTML-код:
 ```
 <sub><sub><sub>
@@ -493,12 +498,14 @@ T‘‘
 <br />
 <i><a href="https://gist.github.com/alextretyak/4d0cbab44fd2605febcbbd870f997b2f">Исходник данной статьи</a><!--[[[, как можно догадаться,]]]--> написан на пк-разметке. Преобразован к формату Habr HTML посредством <a href="https://pypi.python.org/pypi/pqmarkup">реализации на Python</a> (c флагом командной строки <pre class="inline_code">--habr-html</pre>).</i><br />
 <br />
-<span class="spoiler_title" onclick="return spoiler2(this, event)">P.S.<br /></span><div class="spoiler_text" style="display: none">Причины (впрочем, достаточно субъективные), почему я выбрал именно символы <pre class="inline_code">‘’</pre> (а не `´ или, скажем, «» или <pre class="inline_code">“”</pre>):<br />
+<span class="spoiler_title" onclick="return spoiler2(this, event)">P.S.<br /></span><div class="spoiler_text" style="display: none">
+Причины (впрочем, достаточно субъективные), почему я выбрал именно символы <pre class="inline_code">‘’</pre> (а не `´ или, скажем, «» или <pre class="inline_code">“”</pre>):<br />
 <ol>
 <li>Они достаточно приятно выглядят (в соответствующем шрифте <span class="sq"><span class="sq_brackets">[</span>например, Courier New<span class="sq_brackets">]</span></span>). На мой взгляд, лучше, чем «» или ‹›.</li>
 <li><!--[[[Это ~‘абсолютно’ парные символы —]]]-->Они идут подряд друг за другом в любой кодировке (в отличие от `´ или «» или ‹›) <span class="sq"><span class="sq_brackets">[</span>также как и <pre class="inline_code">“”</pre><span class="sq_brackets">]</span></span>.</li>
 <li>Почему не <pre class="inline_code">“”</pre> <!--[[[кстати, Alt+0147 на цифровой клавиатуре эти цифры расположены ещё более удачно — 4 в ряд]]]--> — в русских текстах парным символу <pre class="inline_code">“</pre> является <pre class="inline_code">„</pre> (<a href="http://www.artlebedev.ru/kovodstvo/sections/62/" title="(смотри также [http://www.artlebedev.ru/kovodstvo/sections/104/])">Экранная типографика. Кавычки</a>).</li>
-<li><span class="spoiler_title" onclick="return spoiler2(this, event)">А ещё мне коды[/годы] этих символов нравятся...<br /></span><div class="spoiler_text" style="display: none"><abbr title="[http://unicode.org/Public/UNIDATA/NamesList.txt]">201? и 201¿</abbr></div>
+<li><span class="spoiler_title" onclick="return spoiler2(this, event)">А ещё мне коды[/годы] этих символов нравятся...<br /></span><div class="spoiler_text" style="display: none">
+<abbr title="[http://unicode.org/Public/UNIDATA/NamesList.txt]">201? и 201¿</abbr></div>
 </li>
 </ol>
 <br />
