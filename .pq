@@ -50,7 +50,7 @@
 . ‘Мои [[[неизвестные/]]]малоизвестные проекты с открытым исходным кодом.’{
 . ‘Handy Math Library’[http://www.gamedev.ru/projects/forum/?id=8476] — удобная математическая библиотека для работы с [[[2D и ]](а то подумают ещё, что в ней есть средства для обработки 2D-изображений)]3D графикой (последняя версия здесь[https://sourceforge.net/projects/handy-math-lib/]).
 . s3[http://www.gamedev.ru/projects/forum/?id=133398] — библиотека для [[[эффективного ]]]воспроизведения звука (последняя версия здесь[https://sourceforge.net/p/simple-sound-system/code/]).
-. ltalloc[http://alextretyak.github.io/ltalloc/wiki_ru.htm] — самый быстрый в мире аллокатор памяти {(: для определённого [[[ряда/]]]рода задач :)}.
+. ltalloc[http://alextretyak.github.io/ltalloc/wiki_ru.htm] — самый быстрый в мире многопоточный аллокатор памяти {(: для определённого [[[ряда/]]]рода задач :)}.
 }
 . ‘Мои новые проекты.’{
 . pqmarkup\пк-разметка[http://pqmarkup.org/ru].
