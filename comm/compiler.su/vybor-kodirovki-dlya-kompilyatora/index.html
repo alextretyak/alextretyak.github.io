@@ -1,0 +1,130 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 190%; line-height: 120%;}
+h2 {font-size: 160%;}
+h3 {font-size: 137.5%;}
+h4 {font-size: 120%;}
+h5 {font-size: 110%;}
+h6 {font-size: 100%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<h3><a href="http://compiler.su/vybor-kodirovki-dlya-kompilyatora.php">Выбор кодировки для компилятора (ссылка на статью)</a></h3>
+<br />
+Комментарии:<br />
+<table>
+<tr><td><b>2021-01-17</b> <i>alextretyak</i><br />
+<br />
+<blockquote>Если в язык добавляем поддержку кириллицы, то разбор уже такой:</blockquote>
+Тут наверное ошибка — имеется в виду «добавляем поддержку русского алфавита», а не <a href="https://ru.wikipedia.org/wiki/Кириллица">кириллицы</a>.<br />
+<span class="sq"><span class="sq_brackets">[</span>Причём «русского алфавита без буквы ё» :)(:.<span class="sq_brackets">]</span></span><br />
+<br />
+<blockquote><pre class="code_block">
+    if (! (массив признаков [символ] &amp;&amp; ПЕРВЫЙ СИМВОЛ ИДЕНТИФИКАТОРА ))
+    ...
+        if (! (массив признаков [символ] &amp;&amp; СЛЕДУЮЩИЙ СИМВОЛ ИДЕНТИФИКАТОРА ))
+</pre></blockquote>
+Как я предполагаю <i>ПЕРВЫЙ СИМВОЛ ИДЕНТИФИКАТОРА</i> это константа 1, а <i>СЛЕДУЮЩИЙ СИМВОЛ ИДЕНТИФИКАТОРА</i> — это константа 2.<br />
+Но в таком случае следует использовать поразрядное И (&amp;), а не логическое (&amp;&amp;).<br />
+<br />
+<br />
+Признаю целесообразность ограничиться только поддержкой базовой плоскости Юникода (первые 65536 символов), тогда реализация в виде простого массива из 65536 элементов почти оптимальна. Но если поразмышлять на этот счёт...<br />
+Если посмотреть в <a href="https://docs.microsoft.com/en-us/cpp/cpp/identifiers-cpp?view=msvc-140">документацию MSVC</a>, то там приводятся конкретные диапазоны символов Юникода, которые можно использовать в идентификаторах. Наибольший код допустимого в идентификаторах символа составляет EFFFD, что в десятичной системе — 983037. Таким образом, потребуется массив из 983038 элементов. Но. А что, если признаки символов хранить не в одном массиве, а в разных — по одному массиву на каждый признак. И если вместо массива использовать hash-set\хэш-множество. Я написал простенькую <a href="https://www.dropbox.com/s/ixpifmqdu818in2/MSVC_Identifiers.py?dl=0">программу</a>, которая суммирует все диапазоны из документации MSVC и, таким образом, считает сколько символов допустимо использовать в идентификаторах в MSVC. Получилось 971380. Теперь, вместо того, чтобы хранить символы, которые допустимо использовать в идентификаторах, можно хранить только недопустимые, ведь их всего лишь 11658 (983038 - 971380)!<br />
+<br />
+P.S. Вопрос автору сайта: а почему символ «&#124;» <span class="sq"><span class="sq_brackets">[</span>даже внутри блока кода<span class="sq_brackets">]</span></span> заменяется на «!» (восклицательный знак) при нажатии на «Предварительный просмотр»?</td></tr>
+</table>
+</div>
+</body>
+</html>
