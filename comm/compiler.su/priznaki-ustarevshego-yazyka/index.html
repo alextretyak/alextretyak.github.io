@@ -1,0 +1,166 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 190%; line-height: 120%;}
+h2 {font-size: 160%;}
+h3 {font-size: 137.5%;}
+h4 {font-size: 120%;}
+h5 {font-size: 110%;}
+h6 {font-size: 100%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<h3><a href="http://compiler.su/priznaki-ustarevshego-yazyka.php">Признаки устаревшего языка (ссылка на статью)</a></h3>
+<br />
+Комментарии:<br />
+<table>
+<tr><td><b>2021-01-16</b> <i>alextretyak</i><br />
+<br />
+На первый взгляд эта тема действительно очень актуальна и пример с устаревшим самолётом звучит крайне убедительно (можно ещё добавить к ‘последние достижения науки и техники’ в скобочках: интернет на борту и большой LCD тач экран на спинке каждого кресла самолёта).<br />
+<br />
+Но.<br />
+Если погрузиться в детали, то не всё так однозначно/просто.<br />
+<br />
+Разберу конкретные признаки, приведённые в статье:<br />
+<blockquote>оператор «goto»;</blockquote>
+В целом согласен, т.к. достаточно break/continue с меткой, а также конструкции defer (как в Go и Swift). Все остальные варианты использования goto порождают спагетти-код.<br />
+<br />
+<blockquote>такая обработка исключений, которая ещё хуже «goto», когда исключение неизвестно где возникает и неизвестно куда передаёт управление;</blockquote>
+Очень больная/большая тема.<br />
+По вопросу исключений я и сам менял свою позицию, но решить этот вопрос одними рассуждениями — невозможно. Требуется проанализировать много-много реальных примеров, практического кода, самого разного, на разных языках программирования, с разными способами обработки ошибок, чтобы хоть как-то приблизиться к окончательному решению по данному вопросу. Лично я пока остановился на «устаревшей» модели, принятой в Python и C++, так как ничего реально лучшего (не ‘на словах’/‘в теории’ (см. моё <a href="http://web.archive.org/web/20191218102909/https://bitbucket.org/pqmarkup/pqmarkup/commits/0b7f9590718e928063a5b0d07ff35195c387ecb3">предложение</a>), а на практике) я посоветовать не могу.<br />
+<br />
+<blockquote>постфиксные операции «++» и «--», которые для большинства — загадочны;</blockquote>
+Ещё один спорный момент. <span class="sq"><span class="sq_brackets">[</span>В Swift 3 вообще убрали «++» и «--».<span class="sq_brackets">]</span></span><br />
+Но если я правильно понимаю автора, то против префиксных «++» и «--» он ничего не имеет? Тогда готов согласиться, хотя и считаю запись <pre class="inline_code">i++</pre> красивее <pre class="inline_code">++i</pre>.<br />
+<br />
+<blockquote>приведения типов, влекущие «тайное» изменения значения;</blockquote>
+Не совсем понятно, о каком приведении типов идёт речь. Лично я считаю разумным отказ от неявного приведения типов в большинстве случаев, но оставить возможность явного приведения типов (например, строку в число и наоборот).<br />
+<br />
+<blockquote>нулевой указатель</blockquote>
+Также непонятно, о чём речь. Автор против nullable-типов? Или имеется в виду решение этой проблемы в стиле Kotlin (<a href="https://kotlinlang.ru/docs/reference/null-safety.html">https://kotlinlang.ru/docs/reference/null-safety.html</a>), с обязательной проверкой на null?<br />
+<br />
+<blockquote>возможность присвоить неинициализированное значение</blockquote>
+А что плохого, если язык поддерживает явное указание создания неинициализированной переменной, как например D:<br />
+<blockquote><a href="https://dlang.org/spec/declaration.html#void_init"><i>https://dlang.org/spec/declaration.html#void_init</i></a>:<br />
+<pre class="code_block">
+int x = void;
+</pre></blockquote>
+Это может быть полезно для создания очень больших массивов, в которых реально использоваться будет лишь небольшая часть элементов.<br />
+<br />
+<blockquote>визуальный мусор типа «begin» и «end», особенно ЗАГЛАВНЫМИ буквами;</blockquote>
+Согласен.<br />
+<span class="sq"><span class="sq_brackets">[</span>Сюда же <span class="sq"><span class="sq_brackets">[</span>в визуальный мусор<span class="sq_brackets">]</span></span> можно добавить обязательные точки с запятой в конце строк.<span class="sq_brackets">]</span></span><br />
+<br />
+<blockquote>контроля возможного переполнения при арифметических операциях;</blockquote>
+Уже обсуждалось <a href="http://compiler.su/filosofiya-yazyka.php#46">здесь</a>.<br />
+Как итог: пока процессоры не будут поддерживать генерацию исключения при переполнении аппаратно и без оверхеда, не стоит ожидать такого контроля в языках программирования, ориентированных на высокую производительность.<br />
+<br />
+<blockquote>приоритетов операций а-ля Lisp или Forth;<br />
+контроля границ массивов а-ля Си;<br />
+возможности вернуть из функций объекты как скалярные, так и не скалярные, как фиксированного, так и переменного размера;<br />
+функций — объектов первого класса;<br />
+оператора «for each»;<br />
+вывода типов;</blockquote>
+Согласен.<br />
+<br />
+<blockquote>обращения по абсолютным адресам<br />
+синтаксис, прогибающий под себя программистов, а-ля Forth;<br />
+программирования в стиле доказательств;<br />
+зрительных ориентиров в тексте, позволяющих отличить операции от операндов;</blockquote>
+Не <span class="sq"><span class="sq_brackets">[</span>совсем<span class="sq_brackets">]</span></span> понял, о чём это.<br />
+</td></tr>
+</table>
+</div>
+</body>
+</html>
