@@ -1,0 +1,123 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 190%; line-height: 120%;}
+h2 {font-size: 160%;}
+h3 {font-size: 137.5%;}
+h4 {font-size: 120%;}
+h5 {font-size: 110%;}
+h6 {font-size: 100%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<h3><a href="http://compiler.su/filosofiya-yazyka.php">Философия языка (ссылка на статью)</a></h3>
+<br />
+Комментарии:<br />
+<table>
+<tr><td><b>2017-10-12</b> <i>alextretyak</i><br />
+<br />
+<blockquote>В чём выгода аппаратного прерывания при переполнениях?</blockquote>
+Вы <!--[[[совершенно/абсолютно верно]]]-->правильно ответили на собственный вопрос: ‘‘Не нужен дополнительный код для проверки флага переполнения. Проверки и код раздувают, и процессорное время тратят.’’<br />
+<br />
+<blockquote>P.S. А вы бы могли предложить какую-то альтернативу «try...catch» для реагирования на переполнения?</blockquote>
+Я вижу <!--[[[единственное разумное]/]]-->такое решение:<br />
+<ul>
+<li>Переполнения при арифметических операциях должны <!--[[[бросать]/]вызывать/]-->порождать<!--[[[\raise[‘в Python’]]]]--> <abbr title="фатальные/&quot;дорогие&quot; исключения">исключения второго рода</abbr>, перехватывать которые (посредством catch) — необязательно<!--[[[ {а [[[во многих программах]]]в большинстве программ вообще излишне}]]]-->. <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">Если исключение не было перехвачено (посредством catch), тогда целесообразно сохранить полный дамп памяти процесса <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">в Windows: через вызов <pre style="display: inline">MiniDumpWriteDump(..., MiniDumpWithFullMemory|..., ...)</pre> <span class="sq"><span class="sq_brackets">[</span><span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none"><abbr title="программистам в Katauri">нам</abbr> при работе над ММОРПГ Royal Quest эти дампы очень помогали в исправлении ошибок в коде сервера</span><span class="cu_brackets_b">}</span></span><span class="sq_brackets">]</span></span></span><span class="cu_brackets_b">}</span></span> и выдать пользователю сообщение об ошибке с предложением прервать выполнение программы либо продолжить выполнение "на свой страх и риск".</span><span class="cu_brackets_b">}</span></span></li>
+</ul>
+Свою позицию по исключениям <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">про два рода исключений</span><span class="cu_brackets_b">}</span></span> я изложил <a href="http://web.archive.org/web/20191218102909/https://bitbucket.org/pqmarkup/pqmarkup/commits/0b7f9590718e928063a5b0d07ff35195c387ecb3" title="<- https://sourceforge.net/p/pqmarkup/code/ci/0b7f9590718e928063a5b0d07ff35195c387ecb3/ <- https://bitbucket.org/pqmarkup/pqmarkup/commits/0b7f9590718e928063a5b0d07ff35195c387ecb3">здесь</a>.<br />
+</td></tr>
+</table>
+</div>
+</body>
+</html>
