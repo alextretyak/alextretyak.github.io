@@ -1,0 +1,166 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 190%; line-height: 120%;}
+h2 {font-size: 160%;}
+h3 {font-size: 137.5%;}
+h4 {font-size: 120%;}
+h5 {font-size: 110%;}
+h6 {font-size: 100%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<h3><a href="http://compiler.su/shestnadtsatirichnye-i-dvoichnye-konstanty.php">Шестнадцатиричные и двоичные константы (ссылка на статью)</a></h3>
+<br />
+Комментарии:<br />
+<table>
+<tr><td><b>2019-08-18</b> <i>alextretyak</i><br />
+<br />
+<blockquote>Не хотите ли Вы сказать, что уже ничто не ново</blockquote>
+Ну... я бы немного по-другому сказал. Всё новое — довольно<!--[[[/достаточно]]]--> спорно. Взять тот же Rust с его lifetimes/borrowing (я, кстати, до сих пор не могу найти пример хорошего кода на Rust, где эти lifetimes оправданны, <!--[[[другими словами — я не понимаю, чем эта модель лучше C++]]]-->все приводимые примеры в статьях по Rust либо надуманны, либо их можно <!--[[[спокойно/]]]-->легко переписать на C++ безо всяких lifetimes).<!--[[[Или нововведения в C++ (привет ‘export import’).]]]--><br />
+<br />
+<blockquote>всё Вам настолько знакомо, что в каждом новом языке Вы видите отголоски старых?</blockquote>
+Отчасти и это тоже.<br />
+Но если посмотреть на эволюцию естественных языков, то можно заметить, например, что русский язык <!--[[[почти]]]-->существенно не менялся уже более ста лет с реформы 1918 года, и практически/фактически не менялся с 1956 года. А с наступлением цифровой эпохи ни русский, ни английский, никакие другие естественные языки, скорее всего, меняться уже <!--[[[практически ]]]-->не будут. И я боюсь, что языки программирования постигнет та же участь — <!--[[[с некоторого момента]]]-->они "заморозятся" и их эволюция завершится (также как когда-то завершилась эволюция чисел <span class="sq"><span class="sq_brackets">[</span>ведь, никто не будет спорить с тем, что числа больше не будут эволюционировать? и не только/просто числа, а язык математики, скорее всего, тоже не будет больше эволюционировать!<!--[[[ (кто не согласен — попробуйте привести новшества[?] в математике за последние лет 30[?])]]]--><span class="sq_brackets">]</span></span>).<br />
+<br />
+<blockquote>Ну так приведите пример. Как я должен определить функцию func, чтобы я мог записать: <pre class="inline_code">func() = 123;</pre></blockquote>
+<pre class="code_block">
+#include &lt;iostream>
+
+void func(int i) { std::cout &lt;&lt; i; }
+
+class Proxy
+{
+public:
+    void operator=(int i) { func(i); }
+    operator int() {
+        int r;
+        std::cin >> r;
+        return r;
+    }
+};
+
+Proxy func() { return Proxy(); }
+
+int main()
+{
+    func() = 123;   // заменяется на func(123)
+    int i = func(); // возвращает число из cin
+}
+</pre>
+<br />
+<blockquote>Хотелось, чтобы символы форматирования были на обеих раскладках клавиатуры на одинаковых клавишах.</blockquote>
+А я использую AutoHotkey и у меня в обеих раскладках одинаковое поведение при наборе <!--[[[спец]]]-->символов (например, Shift+2 — это всегда @, Alt+2 — это всегда кавычка ", Shift+3 — это всегда решётка #, а Alt+3 — это всегда № и т.д.).<br />
+Соответствующий скрипт можно посмотреть тут: <a href="http://pqmarkup.org/ru">http://pqmarkup.org/ru</a> → «‘Советы по набору’/‘способы набора’ символов одиночных парных кавычек ‘ и ’...» → «В этот же файл-скрипт можно дополнительно ещё добавить:».<br />
+<br />
+И, если честно, я считаю проблему переключения раскладок <!--[[[— ]]]-->несколько надуманной. Также <!--[[[как и]]]-->весьма сомнительным считаю чрезмерное стремление повысить скорость набора кода <span class="sq"><span class="sq_brackets">[</span>речь про слепую печать и т.д.<!--[[[т.д. — это [[[минимизация переключений раскладки](уже упоминается в этом предложении)]]макросы, горячие клавиши, автодополнение[‘это удобно само по себе, а не с целью повышения скорости набора’]]]]--><span class="sq_brackets">]</span></span>. На первом месте должно быть <b>качество</b> кода или текста, а не его количество. Причём я <!--[[[зачастую]]]--> наблюдал<!--[[[ именно]]]--> такую картину, что чем больше программист пишет кода, тем менее он качественный<!--[[[не обижайся Заккер, но код Саши Котляра мне больше нравится]]]-->.<br />
+Вот пример из Вашей же <a href="https://habr.com/ru/post/208474/">статьи</a>:<br />
+<blockquote>Ховик Меликян приводит пример, когда программа из 80000 строк кода на Си++ и 55000 строк кода на VB заменялась 10 строками на шелл-скрипте.</blockquote>
+<br />
+И чтобы получить более качественный текст <!--[[[сообщений]]]--><span class="sq"><span class="sq_brackets">[</span>комментариев или писем<span class="sq_brackets">]</span></span>, лично я использую два приёма:<br />
+<ol>
+<li>Откладываю его отправку примерно на одни сутки<!--[[[ [в течение этого срока подсознание наиболее[?] активно[?] присылает мысли по улучшению текста комментария]]]]-->.</li>
+<li>Периодически перечитываю этот текст. Суммарно получается больше 10 раз точно. Ну и к чему мне эта пресловутая скорость набора, если на ревью и обдумывание/придумывание<!--[[[/составление]]]--> текста я трачу времени гораздо больше?</li>
+</ol>
+<br />
+А что касается кириллицы в программировании, то, как можно видеть, например в языке КуМир (<a href="http://bsosh6.shkola.hc.ru/teachers_pashut/tuzov/kumir/manual.pdf">http://bsosh6.shkola.hc.ru/teachers_pashut/tuzov/kumir/manual.pdf</a>) хотя и используются кириллические ключевые слова, но математические функции оставлены на английском (например, sqrt или sin<!--[[[или sin — на уроках математики мы же пишем `sin x`, а не `син х` и ничего, к тому же это слово не английское, а латинское]]]--> <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">на уроках математики мы же пишем <pre class="inline_code">sin x</pre>, а не <pre class="inline_code">син х</pre> и ничего</span><span class="cu_brackets_b">}</span></span>). И я считаю это <!--[[[правильным/]]]-->оправданным.<br />
+<br />
+<blockquote>... который не так бросается в глаза:<br />
+https://habrastorage.org/webt/gw/kz/es/gwkzes4_vqnxphhxqspvgzitw-i.png</blockquote>
+А почему Вы не хотите заменять ссылку на картинку тегом &lt;img src="ссылка-на-картинку" />? Она <span class="sq"><span class="sq_brackets">[</span>эта картинка<span class="sq_brackets">]</span></span> ведь совсем небольшая. <!--[[[И/]]]-->А руками копировать ссылку в адресную строку, чтобы посмотреть на <!--[[[неё/]]]-->картинку, очень неудобно.<br />
+</td></tr>
+</table>
+</div>
+</body>
+</html>
