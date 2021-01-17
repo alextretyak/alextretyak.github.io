@@ -123,7 +123,52 @@ div#main {width: 100%;}
 Признаю целесообразность ограничиться только поддержкой базовой плоскости Юникода (первые 65536 символов), тогда реализация в виде простого массива из 65536 элементов почти оптимальна. Но если поразмышлять на этот счёт...<br />
 Если посмотреть в <a href="https://docs.microsoft.com/en-us/cpp/cpp/identifiers-cpp?view=msvc-140">документацию MSVC</a>, то там приводятся конкретные диапазоны символов Юникода, которые можно использовать в идентификаторах. Наибольший код допустимого в идентификаторах символа составляет EFFFD, что в десятичной системе — 983037. Таким образом, потребуется массив из 983038 элементов. Но. А что, если признаки символов хранить не в одном массиве, а в разных — по одному массиву на каждый признак. И если вместо массива использовать hash-set\хэш-множество. Я написал простенькую <a href="https://www.dropbox.com/s/ixpifmqdu818in2/MSVC_Identifiers.py?dl=0">программу</a>, которая суммирует все диапазоны из документации MSVC и, таким образом, считает сколько символов допустимо использовать в идентификаторах в MSVC. Получилось 971380. Теперь, вместо того, чтобы хранить символы, которые допустимо использовать в идентификаторах, можно хранить только недопустимые, ведь их всего лишь 11658 (983038 - 971380)!<br />
 <br />
-P.S. Вопрос автору сайта: а почему символ «&#124;» <span class="sq"><span class="sq_brackets">[</span>даже внутри блока кода<span class="sq_brackets">]</span></span> заменяется на «!» (восклицательный знак) при нажатии на «Предварительный просмотр»?</td></tr>
+P.S. Вопрос автору сайта: а почему символ «&#124;» <span class="sq"><span class="sq_brackets">[</span>даже внутри блока кода<span class="sq_brackets">]</span></span> заменяется на «!» (восклицательный знак) при нажатии на «Предварительный просмотр»?<br />
+</td></tr>
+<tr><td><b>2021-01-18</b> <i>alextretyak</i><br />
+<br />
+Дабы закрыть эту тему решил провести небольшое исследование.<br />
+<br />
+Как я уже писал в<!--[[[ [-своём-]]]]--> предыдущем сообщении, в Microsoft Visual C++ используется определённый набор диапазонов кодов символов, которые разрешено использовать в идентификаторах. Оказывается, эти диапазоны прописаны в стандарте C++ (в Annex E<!--[[[https://stackoverflow.com/questions/50003386/does-c17-allow-a-non-ascii-character-as-an-identifier <- google:‘c++ non acsii identifiers’]]]-->), и они также используются например в языке <a href="https://docs.swift.org/swift-book/ReferenceManual/LexicalStructure.html#ID412">Swift</a>.<br />
+Однако, откуда взялись эти диапазоны<!--[[[, впрочем,]]]--> остаётся загадкой.<br />
+<br />
+В языке C# уже лучше. В том смысле, что в его <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/lexical-structure#identifiers">спецификации</a> не зашиты непосредственно коды символов, а указаны категории символов Юникода (а именно: ‘Lu’, ‘Ll’, ‘Lt’, ‘Lm’, ‘Lo’ и ‘Nl’), которые можно использовать в идентификаторах. (Категории всех символов Юникода указаны в файле <a href="https://www.unicode.org/Public/13.0.0/ucd/UnicodeData.txt">UnicodeData.txt</a><!--[[[На эту ссылку я вышел путём дебаггинга файла makeunicodedata.py[https://github.com/python/cpython/blob/master/Tools/unicode/makeunicodedata.py <- https://github.com/python/cpython/blob/master/Modules/unicodedata.c <- google:‘unicodedata category github’]]]]--> в 3-й колонке.)<br />
+Аналогично, в языке Go <a href="https://golang.org/ref/spec#unicode_letter">используются</a> категории ‘Lu’, ‘Ll’, ‘Lt’, ‘Lm’ и ‘Lo’.<br />
+<br />
+<a href="https://www.python.org/dev/peps/pep-3131/">В Python</a> ещё лучше — всё определение идентификатора помещается в одной строчке:<br />
+<pre class="code_block">
+The identifier syntax is &lt;XID_Start> &lt;XID_Continue>*
+</pre>
+<br />
+Где <pre style="display: inline">&lt;XID_Start></pre> и <pre style="display: inline">&lt;XID_Continue></pre> — категории символов для идентификаторов, которые <span class="sq"><span class="sq_brackets">[</span>категории<span class="sq_brackets">]</span></span> определены прямо в стандарте Unicode! <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">Конкретно: в файле <a href="https://www.unicode.org/Public/13.0.0/ucd/DerivedCoreProperties.txt">DerivedCoreProperties.txt</a><!--[[[Ссылка получена из ссылки [https://www.python.org/dev/peps/pep-3131/]:‘[6] http://www.unicode.org/Public/4.1.0/ucd/DerivedCoreProperties.txt’]]]--></span><span class="cu_brackets_b">}</span></span><br />
+<span class="sq"><span class="sq_brackets">[</span>В JavaScript аналогично <a href="https://www.262.ecma-international.org/11.0/index.html#prod-IdentifierName">используются</a> категории <pre style="display: inline">ID_Start</pre> и <pre style="display: inline">ID_Continue</pre>.<span class="sq_brackets">]</span></span><br />
+<br />
+Но, как говорил В.: «Мы пойдём другим путём!»<br />
+Ну не хочется мне включать коды символов<!--[[[ [диапазоны, категории]]]]--> или их диапазоны в исходный текст лексического анализатора без крайней <!--[[[надобности/]]]-->необходимости. И я решил разобраться с теми средствами, которые предоставляют языки Python и C++ <span class="sq"><span class="sq_brackets">[</span>на которых написан или в которые транслируется лексический анализатор языка 11l<span class="sq_brackets">]</span></span>.<br />
+<br />
+В Python есть метод <pre class="inline_code">isalpha()</pre>, который возвращает <pre class="inline_code">True</pre> для всех символов, принадлежащих одной из категорий ‘Lm’, ‘Lt’, ‘Lu’, ‘Ll’ или ‘Lo’. Что почти в точности совпадает с разрешёнными символами в C# (не считая редко используемую категорию ‘Nl’) и совпадает с разрешёнными символами в Go. Поэтому в Python-коде анализатора можно спокойно использовать <pre class="inline_code">isalpha()</pre><!--[[[ и не париться]]]-->. <span class="sq"><span class="sq_brackets">[</span>Ещё в Python есть встроенный модуль <pre class="inline_code">unicodedata</pre>, функция <pre class="inline_code">unicodedata.category()</pre> которого возвращает категорию заданного символа, но считаю, что можно обойтись <pre class="inline_code">isalpha()</pre>.<span class="sq_brackets">]</span></span><br />
+<br />
+В C/C++ есть функция <pre class="inline_code">iswalpha()</pre>, которая возвращает «не пойми что», причём ещё и в зависимости от текущей локали.<br />
+В попытке разобраться с этой функцией я составил такую табличку:<br />
+<pre class="code_block">
+                                    ┌──────────┬────────┐
+                                    │ макс.код │ кол-во │
+┌───────────────────────────────────┼──────────┼────────┤
+│ MSVC identifiers                  │   983037 │ 971380 │
+│ isalpha() in Python               │   195101 │ 125419 │
+│ Unicode 13.0.0 Letter             │   195101 │ 125419 │
+│ iswalpha() in MSVC (any locale)   │  1114076 │ 811189 │
+│ iswalpha() in GCC (no setlocale)  │      122 │     52 │
+│ iswalpha() in GCC (setlocale "C") │      122 │     52 │
+│ iswalpha() in GCC (setlocale "")  │   195101 │  94318 │
+└───────────────────────────────────┴──────────┴────────┘
+</pre>
+(Исходный код ‘для вычисления’/получения всех этих циферок доступен <a href="https://www.dropbox.com/sh/qo3rc2dw5c2pzx8/AACUTsoN-IPIzjPbEn_zBZipa?dl=0">тут</a>.)<br />
+<br />
+Какой вывод/итог?...<br />
+...А решайте сами. :)(:<br />
+Я пока остановился на варианте «<pre class="inline_code">isalpha()</pre> для Python», «<pre class="inline_code">iswalpha()</pre> <span class="sq"><span class="sq_brackets">[</span>с предварительным вызовом <pre class="inline_code">setlocale(LC_CTYPE, "");</pre><span class="sq_brackets">]</span></span> для C++». Теперь лексические анализаторы транспайлеров Python → 11l и 11l → C++ поддерживают кириллицу в идентификаторах, а это собственно то, ради чего <!--[[[этот вопрос и поднимался]]]-->это исследование и проводилось.<br />
+</td></tr>
 </table>
 </div>
 </body>
