@@ -46,7 +46,7 @@ The identifier syntax is <XID_Start> <XID_Continue>*
 ’
 
 Где #‘<XID_Start>’ и #‘<XID_Continue>’ — категории символов для идентификаторов, которые [категории] определены прямо в стандарте Unicode! {Конкретно: в файле DerivedCoreProperties.txt[https://www.unicode.org/Public/13.0.0/ucd/DerivedCoreProperties.txt][[[Ссылка получена из ссылки [https://www.python.org/dev/peps/pep-3131/]:‘[6] http://www.unicode.org/Public/4.1.0/ucd/DerivedCoreProperties.txt’]]]}
-[В JavaScript аналогично используются[https://www.262.ecma-international.org/11.0/index.html#prod-IdentifierName] категории #‘ID_Start’ и #‘ID_Continue’.]
+[В JavaScript аналогично используются[https://www.262.ecma-international.org/11.0/index.html#prod-IdentifierName] категории #‘ID_Start’ и #‘ID_Continue’ {а до версии ECMAScript 2015 использовались[https://www.262.ecma-international.org/5.1/index.html#sec-7.6] категории такие же как в C#}.]
 
 Но, как говорил В.: «Мы пойдём другим путём!»
 Ну не хочется мне включать коды символов[[[ [диапазоны, категории]]]] или их диапазоны в исходный текст лексического анализатора без крайней [[[надобности/]]]необходимости. И я решил разобраться с теми средствами, которые предоставляют языки Python и C++ [на которых написан или в которые транслируется лексический анализатор языка 11l].
