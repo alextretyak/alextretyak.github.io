@@ -104,8 +104,8 @@ div#main {width: 100%;}
 <h3><a href="http://compiler.su/filosofiya-yazyka.php">Философия языка (ссылка на статью)</a></h3>
 <br />
 Комментарии:<br />
-<table>
-<tr><td><b>2017-10-12</b> <i>alextretyak</i><br />
+<hr />
+<b>2017-10-12</b> <i>alextretyak</i><br />
 <br />
 <blockquote>В чём выгода аппаратного прерывания при переполнениях?</blockquote>
 Вы <!--[[[совершенно/абсолютно верно]]]-->правильно ответили на собственный вопрос: ‘‘Не нужен дополнительный код для проверки флага переполнения. Проверки и код раздувают, и процессорное время тратят.’’<br />
@@ -116,8 +116,6 @@ div#main {width: 100%;}
 <li>Переполнения при арифметических операциях должны <!--[[[бросать]/]вызывать/]-->порождать<!--[[[\raise[‘в Python’]]]]--> <abbr title="фатальные/&quot;дорогие&quot; исключения">исключения второго рода</abbr>, перехватывать которые (посредством catch) — необязательно<!--[[[ {а [[[во многих программах]]]в большинстве программ вообще излишне}]]]-->. <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">Если исключение не было перехвачено (посредством catch), тогда целесообразно сохранить полный дамп памяти процесса <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">в Windows: через вызов <pre style="display: inline">MiniDumpWriteDump(..., MiniDumpWithFullMemory|..., ...)</pre> <span class="sq"><span class="sq_brackets">[</span><span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none"><abbr title="программистам в Katauri">нам</abbr> при работе над ММОРПГ Royal Quest эти дампы очень помогали в исправлении ошибок в коде сервера</span><span class="cu_brackets_b">}</span></span><span class="sq_brackets">]</span></span></span><span class="cu_brackets_b">}</span></span> и выдать пользователю сообщение об ошибке с предложением прервать выполнение программы либо продолжить выполнение "на свой страх и риск".</span><span class="cu_brackets_b">}</span></span></li>
 </ul>
 Свою позицию по исключениям <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">про два рода исключений</span><span class="cu_brackets_b">}</span></span> я изложил <a href="http://web.archive.org/web/20191218102909/https://bitbucket.org/pqmarkup/pqmarkup/commits/0b7f9590718e928063a5b0d07ff35195c387ecb3" title="<- https://sourceforge.net/p/pqmarkup/code/ci/0b7f9590718e928063a5b0d07ff35195c387ecb3/ <- https://bitbucket.org/pqmarkup/pqmarkup/commits/0b7f9590718e928063a5b0d07ff35195c387ecb3">здесь</a>.<br />
-</td></tr>
-</table>
 </div>
 </body>
 </html>
