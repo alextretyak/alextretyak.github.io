@@ -124,7 +124,7 @@ A + B — C
 Вот в 11l есть тип `Словарь`\`Dict` (в C++ это `std::map`). У этого типа есть метод `find()`, который по заданному ключу возвращает либо N/null\Н/нуль (если такого ключа в словаре нет), либо соответствующее значение. (Т.е. метод `find()` возвращает nullable-тип `ValueType?`.) Но чтобы использовать значение, которое вернул `find()`, необходимо либо явно проверить его на N/null\Н/нуль, либо использовать оператор `?` (например так: `dict.find(key) ? default_value`). Как вы предлагаете изменить это? Какая сигнатура и тип возвращаемого значения должны быть у метода `find()`?
 
 Вот примеры кода на 11l, где используется метод `find()`:
-1. 111771+.11l[https://www.dropbox.com/sh/2i0t6hg33z14qt0/AAAvVZ6AyI9ahLju-A-i63Sva/3/3%D0%90?dl=0&preview=111771%2B.11l&subfolder_nav_tracking=1]
+1. 111771+.11l[https://www.dropbox.com/sh/2i0t6hg33z14qt0/AAAvVZ6AyI9ahLju-A-i63Sva/3/3%D0%90?dl=0&preview=111771%2B.11l&subfolder_nav_tracking=1] (это решение ‘задачи «Множества»’[https://informatics.msk.ru/mod/statements/view.php?chapterid=111771])
 2. [[[https://github.com/11l-lang/_11l_to_cpp/blob/master/tests/parser/Rosetta%20Code.txt#L1851]]][https://rosettacode.org/wiki/Knapsack_problem/Bounded#11l][[[Не зря я столько времени потратил на Rosetta Code! :)(:]]]
 3. [[[https://github.com/11l-lang/_11l_to_cpp/blob/master/tests/parser/Rosetta%20Code.txt#L2015]]][https://rosettacode.org/wiki/Longest_common_substring#11l]
 4. `V dot_pos = token.value(source). {.find(‘.’) ? .len}` (данная строка соответствует 3-м строкам Python-кода отсюда[https://github.com/11l-lang/_11l_to_cpp/blob/8734a745d6086c55269576674fb248c74d727222/keyletters_to_keywords.py#L22-L24][[[ссылка получена через ‘...’ -> ‘Copy permalink’]]])
