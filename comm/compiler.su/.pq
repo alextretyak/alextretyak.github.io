@@ -1,5 +1,6 @@
 [В порядке от наиболее интересных моих комментариев к менее интересным.]
-. ‘Выбор кодировки для компилятора’[./vybor-kodirovki-dlya-kompilyatora]
 . ‘Философия языка’[./filosofiya-yazyka]
 . ‘Признаки устаревшего языка’[./priznaki-ustarevshego-yazyka]
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
+. ‘Выбор кодировки для компилятора’[./vybor-kodirovki-dlya-kompilyatora]
+. ‘Лень — двигатель прогресса’[./len-dvigatel-progressa]
