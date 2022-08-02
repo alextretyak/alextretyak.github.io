@@ -56,7 +56,7 @@
 . ‘Мои новые проекты.’{
 . pqmarkup\пк-разметка[http://pqmarkup.org/ru].
 . ELDF[http://eldf.org/ru].
-. [[[новый ]]]‘Язык программирования 11l’[http://11l-lang.org/ru].
+. [[[новый ]]]‘Язык программирования 11l’[https://ru.wikipedia.org/wiki/11l].
 }
 }
 
