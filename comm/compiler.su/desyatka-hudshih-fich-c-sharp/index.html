@@ -101,25 +101,41 @@ div#main {width: 100%;}
 </head>
 <body>
 <div id="main" style="margin: 0 auto">
-<!--[[[В порядке от наиболее интересных моих комментариев к менее интересным.]]]--><br />
-Философские:<br />
-<ul>
-<li><a href="./len-dvigatel-progressa" target="_self">Лень — двигатель прогресса</a></li>
-</ul>
+<h3><a href="http://compiler.su/desyatka-hudshih-fich-c-sharp.php">Десятка худших фич C# (ссылка на статью)</a></h3>
 <br />
-По программированию:<br />
-<ul>
-<li><a href="./filosofiya-yazyka" target="_self">Философия языка</a></li>
-<li><a href="./priznaki-ustarevshego-yazyka" target="_self">Признаки устаревшего языка</a></li>
-<li><a href="./vybor-kodirovki-dlya-kompilyatora" target="_self">Выбор кодировки для компилятора</a></li>
-<li><a href="./pereklyuchatel" target="_self">Переключатель</a></li>
-<li><a href="./desyatka-hudshih-fich-c-sharp" target="_self">Десятка худших фич C#</a></li>
-</ul>
+Комментарии:<br />
+<hr />
+2022-05-22 <i><b>alextretyak</b></i><br />
 <br />
-Смешанные:<br />
-<ul>
-<li><a href="./shestnadtsatirichnye-i-dvoichnye-konstanty" target="_self">Шестнадцатиричные и двоичные константы</a></li>
-</ul>
+<blockquote>Было бы неплохо иметь при определении, допустим, «>» и «==» получать уже определённую «>=»</blockquote>
+Если определён оператор «>», то операторы «&lt;», «>=», «&lt;=» и даже «==» можно получить из<!--[[[/через]]]--> него:<br />
+<pre class="code_block">
+fn `&lt;`(T a, T b) {return b > a}
+fn `>=`(T a, T b) {return !(a &lt; b)}
+fn `&lt;=`(T a, T b) {return !(b &lt; a)}
+fn `!=`(T a, T b) {return a &lt; b or b &lt; a} // равнозначно return a &lt; b or a > b
+fn `==`(T a, T b) {return !(a != b)}
+</pre>
+<hr />
+2022-05-23 <i><b>Автор сайта</b></i><br />
+<br />
+<b>alextretyak</b><br />
+<br />
+То, что Вы написали — это замечательно. Правда, я хотел сказать о другом. О том, что после описания «>» (если опираться на Ваш пример), неплохо бы иметь уже описанными остальные операторы: «&lt;», «>=», «&lt;=», «!=», «==» — без необходимости их описания. Например:<br />
+<pre class="code_block">
+fn `>`(T a, T b) {. . .}        // Описание «>» (в Вашей нотации)
+// После этого «&lt;», «>=», «&lt;=», «!=», «==» являются описанными
+if (a == b)                     // Применяем «==», которую не пришлось описывать
+</pre>
+Хотя этот код не будет максимально эффективным. Например, оператор «==» разворачивается в<br />
+<pre class="code_block">
+!(a != b)
+</pre>
+который, в свою очередь разворачивается в<br />
+<pre class="code_block">
+!(a &lt; b or a > b)
+</pre>
+То, что Вы написали, просто замечательно для математиков. А системный программист увидет в этом изъяны <!--[[[(]]]-->:)<br />
 </div>
 </body>
 </html>
