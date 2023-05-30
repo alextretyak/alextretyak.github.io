@@ -1,0 +1,186 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 200%; line-height: 130%;}
+h2 {font-size: 180%; line-height: 135%;}
+h3 {font-size: 160%; line-height: 140%;}
+h4 {font-size: 145%; line-height: 145%;}
+h5 {font-size: 130%; line-height: 140%;}
+h6 {font-size: 120%; line-height: 140%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<h3><a href="http://compiler.su/pravila-yazyka-strokovye-literaly.php">Правила языка: строковые литералы (ссылка на статью)</a></h3>
+<br />
+Комментарии:<br />
+<hr />
+2023-05-22 <i><b>kt</b></i><br />
+<br />
+Я бы ещё добавил коэффициент повторения для текстовых констант, аналогично PL/1, например:<br />
+<pre class="code_block">
+dcl x bit(64) static init('1'(64)b); // все единицы 
+</pre>
+<pre class="code_block">
+put skip list('='(50),'Начало','='(50); // заголовок из равенств
+</pre>
+<hr />
+2023-05-23 <i><b>Автор сайта</b></i><br />
+<br />
+Думал над этой фичей, но простых вариантов в голову не пришло. Решил, что лучше обойтись (Си обходится же), сделать язык сложным успеется всегда. Впрочем, можно использовать строковую функцию с условным названием «размножить», которая <a href="http://compiler.su/makrosy-eto-chistye-funktsii-ispolnyaemye-vo-vremya-kompilyatsii.php">с константными аргументами отработает во время компиляции</a>, результат будет таким же.<br />
+<br />
+Но ничто не мешает вернуться к этому вопросу. Лексический анализатор хоть и в основном написан, но дополнить его можно в любое время.<br />
+<hr />
+2023-05-29 <i><b>alextretyak</b></i><br />
+<br />
+А чем не устраивает решение как в Python, а именно оператор умножения (*)?<br />
+<style>
+span.keyword {color: #0000FF; font-weight: bold;}
+span.identifier {color: #00009F;}
+span.string-literal {color: #800000;}
+span.numeric-literal {color: #008000;}
+span.constant {color: #008000;}
+span.comment {color: #808080;}
+</style><pre class="code_block">
+<span class="identifier">s</span> = <span class="numeric-literal">5</span> * <span class="string-literal">'-'</span> <span class="comment"># равнозначно s = '-----'</span>
+</pre>
+<hr />
+2023-05-29 <i><b>Автор сайта</b></i><br />
+<br />
+Философия Питона предполагает принцип наименьшего удивления. Однако ожидания прикладных программистов на Питоне не совпадает с ожиданиями системных программистов на Си или Rust. Системные программисты помнят, что литера '-' соответствует числу 45. Поэтому <i><b>5 * '-'</b></i> эквивалентно <i><b>5 * 45</b></i> и даёт 225. Если Вы попробуете, то убедитесь в этом.<br />
+<br />
+Допустим, мы поменяем '-' на "-", чтобы иметь дело не с отдельной литерой, а со строкой, длина которой 1. Но что такое 5 умножить на число n? Это сложить 5 с самой собой n раз. Но как сложить 5 с самой собой "-" раз? Ведь "-" не является числом.<br />
+<br />
+Было бы логичнее записать <i><b>"-" * 5</b></i>, тогда бы это значило <i><b>"-" + "-" + "-" + "-" + "-"</b></i>. Это уже ближе к истине, если рассматривать операцию «+» как склейку строк. Но в любом случае надо 7 раз отмерить. Пока что острой необходимости в этом в первой версии нет, торопиться не будем.<br />
+<br />
+Посмотрел раздел «Строковые литералы» на Вашем сайте, там эта тема не затронута :(<!--[[[)]]]--><br />
+<hr />
+2023-05-31 <i><b>alextretyak</b></i><br />
+<br />
+<blockquote>литера '-' соответствует числу 45. Поэтому <i><b>5 * '-'</b></i> эквивалентно <i><b>5 * 45</b></i> и даёт 225.</blockquote>
+Да, верно.<br />
+А я уже и забыл про такую особенность языка Си.<br />
+Но дело в том, что на практике такая "особенность" никогда не требуется, и связана<!--[[[ лишь]]]--> скорее всего с тем, что в Си было невозможно ввести <span class="sq"><span class="sq_brackets">[</span>отдельный/<span class="sq_brackets">]</span></span>полноценный тип для символа (который было бы запрещено умножать на число), поэтому тип <b>char</b> по факту совпадает с типом <b>int8_t</b>. Такую "фичу" я бы смело добавил в <a href="http://compiler.su/priznaki-ustarevshego-yazyka.php">«Признаки устаревшего языка»</a>.<br />
+<!--[[[
+> не совпадает с ожиданиями системных программистов на Си или Rust. ... Если Вы попробуете, то убедитесь в этом.
+Ну вот в Rust, кстати, такое не прокатывает: умножение символьного литерала на число приводит[https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=ab079d95b778081bb189569d91561730] к ошибке компиляции.
+]]]--><br />
+<blockquote>В Rust нет такого автоматического преобразования. Приведение типов надо делать явно.</blockquote>
+Да, а вот в Java и C#, на удивление, оставлено поведение Си (могли бы хоть warning\предупреждение выдавать в таких случаях).<br />
+<br />
+<blockquote>Посмотрел раздел «Строковые литералы» на Вашем сайте, там эта тема не затронута :(</blockquote>
+Не затронута, т.к. конструкции вида <b>5 * "-"</b> не являются строковыми литералами <span class="sq"><span class="sq_brackets">[</span>также как <b>5 * 45</b> не является целочисленным литералом, хотя и является целочисленным константным выражением (integral constant expression) и может использоваться везде, где могут использоваться только целочисленные константы/литералы<span class="sq_brackets">]</span></span>.<br />
+В 11l, так<!--[[[ ]]]-->же как в Python, можно умножать число на строку (в т.ч. на строковый литерал).<br />
+<br />
+<!--[[[Вообще]]]-->И хочу добавить, что разделение символьных и строковых литералов мне категорически не нравится <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">например тем, что можно написать <pre class="inline_code">s.find('\n')</pre>, а можно <pre class="inline_code">s.find("\n")</pre>, что даёт одинаковый результат, но при этом первая запись <!--[[[будет ]]]--><!--[[[значительно]/]]-->будет эффективнее</span><span class="cu_brackets_b">}</span></span>. Поэтому в 11l такого разделения нет, а есть "сырые" (например <pre class="inline_code">‘\’</pre>) и "не сырые" (например <pre class="inline_code">"\\"</pre> <span class="sq"><span class="sq_brackets">[</span>что равнозначно <pre class="inline_code">‘\’</pre><span class="sq_brackets">]</span></span>) строковые литералы, фактический тип которых (<b>Строка</b> либо <b>Символ</b>) определяется при компиляции в зависимости от контекста использования этого литерала:<br />
+<pre class="code_block">
+<span class="keyword">пер</span> <span class="identifier">м1</span> = [<span class="string-literal">‘а’</span>, <span class="string-literal">‘б’</span>, <span class="string-literal">‘в’</span>] <span class="comment">// это массив символов</span>
+<span class="keyword">пер</span> <span class="identifier">м2</span> = [<span class="string-literal">‘а’</span>, <span class="string-literal">‘бб’</span>, <span class="string-literal">‘в’</span>] <span class="comment">// а это массив строк</span>
+
+<span class="keyword">пер</span> <span class="identifier">с</span> = <span class="string-literal">‘-’</span> <span class="comment">// это строка; если требуется символ, то следует писать пер с = Символ(‘-’)</span>
+<span class="identifier">вывод</span>(<span class="string-literal">‘-’</span>.<span class="identifier">код</span>) <span class="comment">// выведет 45 (в таком контексте ‘-’ считается символом, а не строкой)</span>
+
+<span class="keyword">пер</span> <span class="identifier">м3</span> = [<span class="identifier">Строка</span>(<span class="string-literal">‘а’</span>), <span class="string-literal">‘б’</span>, <span class="string-literal">‘в’</span>] <span class="comment">// это массив строк</span>
+</pre>
+<br />
+Вообще, я подумываю над тем, чтобы строковые литералы, состоящие всего из одного символа <span class="sq"><span class="sq_brackets">[</span>т.е. длина которых равна 1<span class="sq_brackets">]</span></span>, всегда преобразовывались в тип <b>Символ</b> <span class="sq"><span class="sq_brackets">[</span>в таком случае вместо <b>пер с = ‘-’</b> в примере выше придётся писать <b>пер с = Строка(‘-’)</b> или <b>Строка с = ‘-’</b><span class="sq_brackets">]</span></span>, но для принятия <span class="sq"><span class="sq_brackets">[</span>однозначного/<span class="sq_brackets">]</span></span>окончательного <!--[[[вывода/]]]-->решения мне пока ещё <!--[[[нужно больше]/]]-->не хватает данных.<br />
+<br />
+<blockquote>Пока что острой необходимости в этом в первой версии нет</blockquote>
+Да, умножение числа на строку требуется достаточно редко, но вот аналогичное умножение булевой переменной/выражения на строку нужно намного чаще (например, в <a href="https://sourceforge.net/p/pqmarkup/code/ci/default/tree/pqmarkup.py">коде</a> моей реализации pqmarkup оно встречается 15 раз).<br />
+<!--[[[
+> Но что такое 5 умножить на число n? Это сложить 5 с самой собой n раз. Но как сложить 5 с самой собой "-" раз? Ведь "-" не является числом.
+Следуя такой логике: ~‘5x’ означает сложить 5 с самой собой ~‘x’ раз. Но если ~‘x = 1.5’, то как сложить 5 с самой собой 1.5 раз? А вот сложить 1.5 с самой собой 5 раз прекрасно получается.
+]]]--><br />
+</div>
+</body>
+</html>
