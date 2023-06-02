@@ -164,7 +164,7 @@ span.comment {color: #808080;}
 Не затронута, т.к. конструкции вида <b>5 * "-"</b> не являются строковыми литералами <span class="sq"><span class="sq_brackets">[</span>также как <b>5 * 45</b> не является целочисленным литералом, хотя и является целочисленным константным выражением (integral constant expression) и может использоваться <abbr title="например, выражения в метках `case`, размер статических массивов, значения перечислителей\enumerators">везде</abbr>, где могут использоваться только целочисленные <abbr title="константные выражения">константы</abbr>/литералы<span class="sq_brackets">]</span></span>.<br />
 В 11l, так<!--[[[ ]]]-->же как в Python, можно умножать число на строку (в т.ч. на строковый литерал).<br />
 <br />
-<!--[[[Вообще]]]-->И хочу добавить, что разделение символьных и строковых литералов мне категорически не нравится <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">например тем, что можно написать <pre class="inline_code">s.find('\n')</pre>, а можно <pre class="inline_code">s.find("\n")</pre>, что даёт одинаковый результат, но при этом первая запись <!--[[[будет ]]]--><!--[[[значительно]/]]-->будет эффективнее</span><span class="cu_brackets_b">}</span></span>. Поэтому в 11l такого разделения нет, а есть "сырые" (например <pre class="inline_code">‘\’</pre>) и "не сырые" (например <pre class="inline_code">"\\"</pre> <span class="sq"><span class="sq_brackets">[</span>что равнозначно <pre class="inline_code">‘\’</pre><span class="sq_brackets">]</span></span>) строковые литералы, фактический тип которых (<b>Строка</b> либо <b>Символ</b>) определяется при компиляции в зависимости от контекста использования этого литерала:<br />
+<!--[[[Вообще]]]-->И хочу добавить, что разделение символьных и строковых литералов мне категорически не нравится <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">например тем, что можно написать <pre style="display: inline">s.find('\n')</pre>, а можно <pre style="display: inline">s.find("\n")</pre>, что даёт одинаковый результат, но при этом первая запись <!--[[[будет ]]]--><!--[[[значительно]/]]-->будет эффективнее</span><span class="cu_brackets_b">}</span></span>. Поэтому в 11l такого разделения нет, а есть "сырые" (например <pre class="inline_code">‘\’</pre>) и "не сырые" (например <pre class="inline_code">"\\"</pre> <span class="sq"><span class="sq_brackets">[</span>что равнозначно <pre class="inline_code">‘\’</pre><span class="sq_brackets">]</span></span>) строковые литералы, фактический тип которых (<b>Строка</b> либо <b>Символ</b>) определяется при компиляции в зависимости от контекста использования этого литерала:<br />
 <pre class="code_block">
 <span class="keyword">пер</span> <span class="identifier">м1</span> = [<span class="string-literal">‘а’</span>, <span class="string-literal">‘б’</span>, <span class="string-literal">‘в’</span>] <span class="comment">// это массив символов</span>
 <span class="keyword">пер</span> <span class="identifier">м2</span> = [<span class="string-literal">‘а’</span>, <span class="string-literal">‘бб’</span>, <span class="string-literal">‘в’</span>] <span class="comment">// а это массив строк</span>
@@ -178,11 +178,157 @@ span.comment {color: #808080;}
 Вообще, я подумываю над тем, чтобы строковые литералы, состоящие всего из одного символа <span class="sq"><span class="sq_brackets">[</span>т.е. длина которых равна 1<span class="sq_brackets">]</span></span>, всегда преобразовывались в тип <b>Символ</b> <span class="sq"><span class="sq_brackets">[</span>в таком случае вместо <b>пер с = ‘-’</b> в примере выше придётся писать <b>пер с = Строка(‘-’)</b> или <b>Строка с = ‘-’</b><span class="sq_brackets">]</span></span>, но для принятия <span class="sq"><span class="sq_brackets">[</span>однозначного/<span class="sq_brackets">]</span></span>окончательного <!--[[[вывода/]]]-->решения мне пока ещё <!--[[[нужно больше]/]]-->не хватает данных.<br />
 <br />
 <blockquote>Пока что острой необходимости в этом в первой версии нет</blockquote>
-Да, умножение числа на строку требуется достаточно редко, но вот аналогичное умножение булевой переменной/выражения на строку нужно намного чаще (например, в <a href="https://sourceforge.net/p/pqmarkup/code/ci/default/tree/pqmarkup.py">коде</a> моей реализации pqmarkup оно встречается 15 раз).<br />
-<!--[[[
+Да, умножение числа на строку требуется достаточно редко, но вот аналогичное умножение булевой переменной/выражения на строку нужно намного чаще (например, в <a href="https://sourceforge.net/p/pqmarkup/code/ci/default/tree/pqmarkup.py">коде</a> моей реализации pqmarkup оно встречается 15 раз).<!--[[[
+
 > Но что такое 5 умножить на число n? Это сложить 5 с самой собой n раз. Но как сложить 5 с самой собой "-" раз? Ведь "-" не является числом.
 Следуя такой логике: ~‘5x’ означает сложить 5 с самой собой ~‘x’ раз. Но если ~‘x = 1.5’, то как сложить 5 с самой собой 1.5 раз? А вот сложить 1.5 с самой собой 5 раз прекрасно получается.
 ]]]--><br />
+<hr />
+2023-05-31 <i><b>Автор сайта</b></i><br />
+<br />
+<blockquote>тип <b>char</b> по факту совпадает с типом <b>int8_t</b>. Такую "фичу" я бы смело добавил в <a href="http://compiler.su/priznaki-ustarevshego-yazyka.php">«Признаки устаревшего языка»</a>.</blockquote>
+Было бы интересно услышать от Вас аргументы в пользу этого. Если такие типы эквивалентны, то в чём становится хуже?<br />
+<br />
+<blockquote>а вот в Java и C#, на удивление, оставлено поведение Си</blockquote>
+За автоматическое приведение целых типов с меньшей разрядностью к целым типам с большей разрядностью, котор<!--[[[-'‘ы’']]]-->ое не искажает значения, есть серьёзный аргумент. Они делают код короче, освобождают от лишних несущественных деталей. Другое дело, если автоматические приведения искажают значения. Тогда да, с этим надо бороться. Если чётко провести границу между искажающими и неискажающими преобразованиями, то польза в виде краткости кода вполне очевидна. А какие аргументы против Вы видите?<br />
+<br />
+<blockquote><blockquote>Посмотрел раздел «Строковые литералы» на Вашем сайте, там эта тема не затронута :(<!--[[[)]]]--></blockquote>
+Не затронута, т.к. конструкции вида <b>5 * "-"</b> не являются строковыми литералами</blockquote>
+Запутался в терминологии, имел в виду символьные литералы, которые искал в разделе «Строковые литералы». Выше на этой странице описаны оба вида литералов, того же ожидал от вашего сайта. Но не нашёл у Вас описания именно символьных литералов.<br />
+<br />
+<blockquote>разделение символьных и строковых литералов мне категорически не нравится</blockquote>
+Ну так объединяйте их. Есть же языки, где строка единичной длины эквивалентна строковому литералу. Да, небольшая потеря эффективности процессора, зато небольшое увеличение эффективности программиста. Множество языков придерживаются такой философии. Если Вы позиционируете свой язык в этой же нише, то почему бы и нет?<br />
+<br />
+<blockquote><pre class="code_block">
+<span class="keyword">пер</span> <span class="identifier">м1</span> = [<span class="string-literal">‘а’</span>, <span class="string-literal">‘б’</span>, <span class="string-literal">‘в’</span>] <span class="comment">// это массив символов</span>
+. . .
+<span class="keyword">пер</span> <span class="identifier">с</span> = <span class="string-literal">‘-’</span> <span class="comment">// это строка; если требуется символ, то следует писать пер с = Символ(‘-’)</span>
+</pre></blockquote>
+По какой причине в первой строке делается вывод, что это массив символов? Там же не написано <pre style="display: inline"><span class="identifier">Символ</span>(<span class="string-literal">‘&lt;литера>’</span>)</pre>.<br />
+<br />
+<blockquote>чтобы строковые литералы, состоящие всего из одного символа <span class="sq"><span class="sq_brackets">[</span>т.е. длина которых равна 1<span class="sq_brackets">]</span></span>, всегда преобразовывались в тип <b>Символ</b></blockquote>
+Тут ещё надо определиться: эта длина, равная 1, должна быть известна во время компиляции, чтобы принимать решение именно в это время? Или же во время исполнения тоже.<br />
+<br />
+<blockquote>умножение числа на строку требуется достаточно редко</blockquote>
+Ещё раз хочу расставить точки над «ё». Если 5 умножаем на строку, то множимое тут — 5, а строка — множитель. Умножается (то есть размножается!) пятёрка, а не строка. Логичнее, если строка бывает множимым, то есть размножаемым. Если умножаем множимое на множитель, то размножается первое, а не второе. Тот случай, когда перемена мест имеет значение.<br />
+<br />
+<blockquote>умножение булевой переменной/выражения на строку нужно намного чаще</blockquote>
+Мне кажется, что оператор Элвиса вполне подходящ в таких случаях. Кстати, как Вы относитесь к автоматическим преобразованиям значений в булев тип и обратно? Типа 0 — «ложь», всё остальное — «истина». И наоборот, «ложь» автоматически превращается в 0, вот только во что превращается «истина» и почему? И следует ли считать такие автоматические преобразовани<!--[[[-'‘ем’']]]-->я свидетельством устаревания языка?<br />
+<br />
+<blockquote>сложение символьного литерала с числом имеет практическое применение (например: <b>'0' + i</b> для получения символа-цифры <b>i</b> <span class="sq"><span class="sq_brackets">[</span>при этом <b>i</b> должно быть от 0 до 9<span class="sq_brackets">]</span></span> или <b>'a' + n</b> для получения <b>n</b>-ной буквы латинского алфавита).</blockquote>
+Вам теперь будет над чем подумать, как совместить и то, и это: отсутствие символьных литералов с операциями над ними <!--[[[(]]]-->:)<br />
+<hr />
+2023-06-01 <i><b>MihalNik</b></i><br />
+<br />
+<blockquote>Логичнее, если строка бывает множимым, то есть размножаемым. Если умножаем множимое на множитель, то размножается первое, а не второе. Тот случай, когда перемена мест имеет значение.</blockquote>
+Логичнее, когда размножением строк получаются новые строки не зависимо от порядка следования.<br />
+<br />
+<blockquote>умножение числа на строку требуется достаточно редко</blockquote>
+Отсутствие удобного размножения строк на уровне языка в консольных приложениях выливается в полотна литералов псевдографики и отступов.<br />
+<hr />
+2023-06-02 <i><b>alextretyak</b></i><br />
+<br />
+<blockquote><blockquote>тип <b>char</b> по факту совпадает с типом <b>int8_t</b>. Такую "фичу" я бы смело добавил в <a href="http://compiler.su/priznaki-ustarevshego-yazyka.php">«Признаки устаревшего языка»</a>.</blockquote>
+Было бы интересно услышать от Вас аргументы в пользу этого. Если такие типы эквивалентны, то в чём становится хуже?</blockquote>
+Во-первых, в том, что компилятор позволяет писать всякие глупости вроде сложения, умножения или даже деления символьных литералов или символьных переменных (аналогично, ни один язык программирования не позволяет производить такие операции над указателями, ведь они также не имеют смысла).<br />
+Во-вторых, специальный тип для символа позволяет снабдить его специфическими методами, такими как <pre class="inline_code">is_digit()</pre> или <pre class="inline_code">lowercase()</pre>, или даже операторами (например, операция вычитания для символов вполне допустима: если символ <pre class="inline_code">c</pre> является строчной латинской буквой, то <pre class="inline_code">c - 'a'</pre> даст номер этой буквы в алфавите <span class="sq"><span class="sq_brackets">[</span>кстати, для указателей операция вычитания также допустима/применима<span class="sq_brackets">]</span></span>; или операция сложения — только не двух символов, а сложение символа и числа <span class="sq"><span class="sq_brackets">[</span>при этом тип результата разумно сделать символом, а не числом, как собственно уже и сделано в Kotlin<span class="sq_brackets">]</span></span>).<br />
+И в-третьих, иногда требуется массив 8-разрядных целых чисел, и хочется, чтобы это было отражено средствами языка явно. Для чего? Ну, например, чтобы имея массив 8-разрядных целых при выводе его в консоль <span class="sq"><span class="sq_brackets">[</span>либо при просмотре его в отладчике<span class="sq_brackets">]</span></span> он выводился/отображался именно как массив чисел, а не массив символов с непонятно какими кодами. Вот <!--[[[к примеру ]]]--><a href="https://cboard.cprogramming.com/cplusplus-programming/128808-1-byte-int-not-using-char.html" title="<- google:‘c single byte’">тут</a> человек жалуется, что ему нужно однобайтовое целое число, но проблема в том, что <pre class="inline_code">std::cout</pre> выводит его как символ, и приходится кастить 8-разрядное число к short или int при его выводе.<br />
+<br />
+<blockquote><blockquote>а вот в Java и C#, на удивление, оставлено поведение Си</blockquote>
+За автоматическое приведение целых типов с меньшей разрядностью к целым типам с большей разрядностью, которое не искажает значения, есть серьёзный аргумент. ... А какие аргументы против Вы видите?</blockquote>
+Нет, против такого автоматического приведения я ничего <!--[[[против ]]]-->не имею. Я против <!--[[[исключительно ]]]-->трактовки символов/‘символьных литералов’ как целых чисел малой разрядности. И если даже ради совместимости с Си в Java и C# оставили такой <!--[[[анахронизм/]]]-->архаизм, то могли бы отдельно проверить/обработать случай умножения символьного литерала на число.<br />
+А в Rust, между прочим, char является отдельным типом <span class="sq"><span class="sq_brackets">[</span>причём 4-х байтовым<span class="sq_brackets">]</span></span>, который автоматически не приводится ни к какому целочисленному типу. В этом отношении, я согласен с разработчиками Rust, а вот с тем, что в Rust отсутствует автоматическое приведение целых типов с меньшей разрядностью к целым типам с большей разрядностью, я не согласен <span class="sq"><span class="sq_brackets">[</span>также как и Вы, насколько я понимаю<span class="sq_brackets">]</span></span>.<br />
+<br />
+<blockquote>Но не нашёл у Вас описания именно символьных литералов.</blockquote>
+Таких литералов в 11l нет, и описания, соответственно, тоже. :)(:<!--[[[ Зачем описывать то, чего нет?]]]--><br />
+Но описание правил автоматического преобразования строковых литералов к типу <b>Символ</b>, конечно, стоит добавить в документацию языка.<!--[[[ Получается, тип *‘Символ’ есть, а символьного литерала нет. :)(:]]]--><br />
+<br />
+<blockquote>имел в виду символьные литералы, которые искал в разделе «Строковые литералы». Выше на этой странице описаны оба вида литералов, того же ожидал от вашего сайта.</blockquote>
+Да, похоже, такое описание разумно добавить именно <!--[[[в/]]]-->на эту страницу. Но пока я ещё <span class="sq"><span class="sq_brackets">[</span>окончательно<span class="sq_brackets">]</span></span> не определился с тем, каковы должны быть правила такого автоматического преобразования, а потому и не спешу добавлять <!--[[[их/]]]-->это в документацию.<br />
+<br />
+<blockquote>Ну так объединяйте их. Есть же языки, где строка единичной длины эквивалентна строковому литералу.</blockquote>
+Не совсем понятно, что вы имели в виду<!--[[[?]]]-->. Может «строка единичной длины эквивалентна <u>символьному</u> литералу»?<br />
+И о каких языках речь? <span class="sq"><span class="sq_brackets">[</span>Я что-то навскидку не могу припомнить такого поведения, хотя языков повидал немало.<span class="sq_brackets">]</span></span><br />
+<br />
+<blockquote>Да, небольшая потеря эффективности процессора, зато небольшое увеличение эффективности программиста.</blockquote>
+<!--[[[Суть в том, чтобы]]]-->Я считаю, что в данном случае можно добиться увеличения эффективности программиста без потери производительности<!--[[[ (или даже добиться увеличения эффективности программиста с увеличением производительности, как например в случае с #(C++)‘s.find("\n")’, которое будет работать как #(C++)‘s.find('\n')’ автоматически)]]]-->. В наиболее общем виде можно сформулировать такое правило: если строковый литерал единичной длины можно рассматривать как символьный литерал <span class="sq"><span class="sq_brackets">[</span>ну т.е. если в этом случае не будет ошибок компиляции<span class="sq_brackets">]</span></span>, тогда его нужно<!--[[[/необходимо]]]--> рассматривать именно как символьный литерал (и при необходимости приводить к типу <b>Символ</b>), иначе он приводится к типу <b>Строка</b> <span class="sq"><span class="sq_brackets">[</span>но опять же при необходимости: например при передаче строкового литерала в качестве аргумента функции совсем не обязательно <!--[[[приводить его к типу]]/]-->создавать при вызове этой функции <span class="sq"><span class="sq_brackets">[</span>в run-time<span class="sq_brackets">]</span></span> объект типа <b>Строка</b>, можно создать некий аналог объекта <pre class="inline_code">std::string_view</pre>, который состоит лишь из указателя и длины строки, и передавать в функцию именно его<span class="sq_brackets">]</span></span>.<br />
+<br />
+<blockquote>По какой причине в первой строке делается вывод, что это массив символов? Там же не написано <pre style="display: inline"><span class="identifier">Символ</span>(<span class="string-literal">‘&lt;литера>’</span>)</pre>.</blockquote>
+По причине того, что так захардкодено в компиляторе. :)(:<br />
+<span class="sq"><span class="sq_brackets">[</span>Ну т.е. буквально так и делается: при компиляции проверяются все элементы массива, и если все они являются строковыми литералами единичной длины, значит это массив символов.<span class="sq_brackets">]</span></span><br />
+После фразы «фактический тип (<b>Строка</b> либо <b>Символ</b>) определяется при компиляции в зависимости от контекста использования этого литерала» собственно и приводятся примеры кода, в каких случаях строковые литералы единичной длины считаются символьными, а в каких нет.<br />
+<br />
+<blockquote>Тут ещё надо определиться: эта длина, равная 1, должна быть известна во время компиляции, чтобы принимать решение именно в это время? Или же во время исполнения тоже.</blockquote>
+<!--[[[Так ведь длина строкового литерала всегда известна во время компиляции (чтобы она [эта длина] не означала — количество байт, Unicode code point/unit или графем).
+]]]-->Я говорю в основном про этап компиляции, т.к. основная цель — обойтись без разделения на строковые и символьные литералы.<br />
+А проверку на единичность длины строк во время исполнения лучше вынести в реализацию конкретных функций, где такая оптимизация имеет смысл (к примеру, та же <pre style="display: inline"><span class="identifier">s</span>.<span class="identifier">find</span>(<span class="identifier">some_string</span>)</pre> в случае когда длина <pre style="display: inline"><span class="identifier">some_string</span></pre> равна 1, получит некоторое повышение производительности <!--[[[если вместо]]]--><!--[[[избавившись]/]]-->за счёт избавления от вложенного цикла по длине строки <pre style="display: inline"><span class="identifier">some_string</span></pre> — в этом случае вызов <pre style="display: inline"><span class="identifier">s</span>.<span class="identifier">find</span>(<span class="identifier">some_string</span>)</pre> будет равнозначен <pre style="display: inline"><span class="identifier">s</span>.<span class="identifier">find</span>(<span class="identifier">some_string</span>[<span class="numeric-literal">0</span>])</pre>).<br />
+<br />
+<blockquote>Ещё раз хочу расставить точки над «ё». Если 5 умножаем на строку, то множимое тут — 5, а строка — множитель. Умножается (то есть размножается!) пятёрка, а не строка. ... Если умножаем множимое на множитель, то размножается первое, а не второе. Тот случай, когда перемена мест имеет значение.</blockquote>
+Юрий, что вы мутите воду, ну не имеет перемена мест тут значения. :)(:<br />
+А то иначе, следуя такой логике, получится, что <i>5x</i> всегда означает сложить 5 с самой собой <i>x</i> раз. Но если <i>x = 1.5</i> <span class="sq"><span class="sq_brackets">[</span>или вообще, если <i>x</i> — это комплексное число!<span class="sq_brackets">]</span></span>, то как сложить 5 с самой собой 1.5 раз? А вот сложить 1.5 с самой собой 5 раз прекрасно получается.<br />
+<br />
+<blockquote>Мне кажется, что оператор Элвиса вполне подходящ в таких случаях.</blockquote>
+Нет, Элвис же <!--[[[совсем/]]]-->несколько про другое <span class="sq"><span class="sq_brackets">[</span>ведь Элвис — это урезанный тернарный оператор <pre class="inline_code">?:</pre>, а здесь нужен полноценный<span class="sq_brackets">]</span></span>.<br />
+<!--[[[Здесь/]]]-->Т.е. речь о таком коде:<br />
+<pre class="code_block">
+<span class="identifier">outfile</span>.<span class="identifier">write</span>(<span class="string-literal">"&lt;table"</span> + <span class="string-literal">' style="display: inline"'</span>*<span class="identifier">is_inline</span> + <span class="string-literal">">\n"</span>)
+</pre>
+Без оператора умножения его пришлось бы писать так <span class="sq"><span class="sq_brackets">[</span>на Python<span class="sq_brackets">]</span></span>:<br />
+<pre class="code_block">
+<span class="identifier">outfile</span>.<span class="identifier">write</span>(<span class="string-literal">"&lt;table"</span> + (<span class="string-literal">' style="display: inline"'</span> <span class="keyword">if</span> <span class="identifier">is_inline</span> <span class="keyword">else</span> <span class="string-literal">''</span>) + <span class="string-literal">">\n"</span>)
+</pre>
+Или так на C++:<br />
+<pre class="code_block">
+outfile.write("&lt;table"s + (is_inline ? " style=\"display: inline\"" : "") + ">\n")
+</pre>
+Вроде разница и небольшая, но читаемость кода с оператором умножения всё-таки <!--[[[чуток/]]]-->немного лучше.<br />
+<br />
+<blockquote>Кстати, как Вы относитесь к автоматическим преобразованиям значений в булев тип и обратно?</blockquote>
+Отрицательно. За редкими исключениями (например, тип <pre style="display: inline"><span class="identifier">re</span>:<span class="identifier">Match</span></pre> в 11l имеет такое автоматическое преобразование, впрочем, не исключено, что в будущих версиях языка я от него откажусь: функция <pre style="display: inline"><span class="identifier">RegEx</span>.<span class="identifier">match</span>()</pre> может возвращать не <pre style="display: inline"><span class="identifier">re</span>:<span class="identifier">Match</span></pre>, а <pre style="display: inline"><span class="identifier">re</span>:<span class="identifier">Match?</span></pre>, и тогда вместо <pre style="display: inline"><span class="keyword">if</span> ...<span class="identifier">match</span>(...) {...}</pre> нужно будет писать <pre style="display: inline"><span class="keyword">if</span> ...<span class="identifier">match</span>(...) != <span class="keyword">null</span> {...}</pre>).<br />
+<br />
+<blockquote>Типа 0 — «ложь», всё остальное — «истина».</blockquote>
+Вот это вот «всё остальное» — это что? Это то, что не равно 0 <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none"><br />
+Ну с числами ещё ладно. Гораздо хуже когда например язык приводит автоматически строку к булевому типу: как следует приводить к bool пустую строку? В некоторых языках пустая строка считается истиной (Ruby, Crystal), а в некоторых — ложью (Python, JavaScript, PHP, Perl).<br />
+Если следовать утверждению "0 — «ложь», всё остальное — «истина»", то т.к. пустая строка не является нулём, то её следует считать истиной.<br />
+В общем, единственный разумный выход, как я вижу, это писать явно: например в 11l вместо <pre style="display: inline"><span class="keyword">if</span> <span class="identifier">s</span> {...}</pre> следует писать <pre style="display: inline"><span class="keyword">if</span> <span class="identifier">s</span> != <span class="string-literal">‘’</span> {...}</pre> либо <pre style="display: inline"><span class="keyword">if</span> !<span class="identifier">s</span>.<span class="identifier">empty</span> {...}</pre>.<br />
+</span><span class="cu_brackets_b">}</span></span>. Вот так, я считаю, и следует всегда писать: <pre style="display: inline"><span class="keyword">if</span> <span class="identifier">int_var</span> != <span class="numeric-literal">0</span> {...}</pre>, а просто <pre style="display: inline"><span class="keyword">if</span> <span class="identifier">int_var</span> {...}</pre> должно <!--[[[быть/]]]-->считаться ошибкой.<br />
+<br />
+<blockquote>И наоборот, «ложь» автоматически превращается в 0, вот только во что превращается «истина» и почему?</blockquote>
+Истину логично превращать в 1, т.к. именно такое значение на аппаратном уровне имеет истина\true в булевом типе <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">при записях вида <pre class="inline_code">bool b = true</pre> <span class="sq"><span class="sq_brackets">[</span><span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none"><br />
+Ещё можно придумать что-нибудь экзотическое, например <pre class="inline_code">bool b = i8_var1 != i8_var2;</pre> "соптимизировать" до <pre class="inline_code">bool b = i8_var1 - i8_var2;</pre>. В этом случае истиной будет какое-то ненулевое значение. Но почему так делать <span class="sq"><span class="sq_brackets">[</span>с целью оптимизации<span class="sq_brackets">]</span></span> не следует? Потому что сравнения <pre class="inline_code">b1 == b2</pre> придётся компилировать как <pre class="inline_code">(b1 != 0) == (b2 != 0)</pre>. Ну и сохранение структур, содержащих bool поля, в файл будет работать неконсистентно.<br />
+</span><span class="cu_brackets_b">}</span></span><span class="sq_brackets">]</span></span></span><span class="cu_brackets_b">}</span></span> во всех реализациях всех языков программирования, насколько мне известно. <span class="sq"><span class="sq_brackets">[</span>Что-то слышал про все единицы (речь про двоичное представление, разумеется), но в каком конкретно языке или в какой реализации такое, сказать не могу.<span class="sq_brackets">]</span></span><br />
+<br />
+<blockquote>И следует ли считать такие автоматические преобразования свидетельством устаревания языка?</blockquote>
+По моему мнению, да.<br />
+Даже в древнем Java, несмотря на его совместимость с Си<!--[[[,]]]--> во многих моментах <span class="sq"><span class="sq_brackets">[</span>включая целочисленный тип char<span class="sq_brackets">]</span></span>, числа не преобразуются автоматически в булев тип и обратно (и написать <pre style="display: inline"><span class="keyword">if</span> (<span class="numeric-literal">0</span>) ...</pre> или <pre style="display: inline"><span class="keyword">if</span> (<span class="numeric-literal">1</span>) ...</pre> в Java нельзя).<br />
+<br />
+<blockquote>Вам теперь будет над чем подумать, как совместить и то, и это: отсутствие символьных литералов с операциями над ними <!--[[[(]]]-->:)</blockquote>
+Ну<!--[[[, во-первых,]]]--> такое отсутствие весьма условно. Я бы назвал это «автоматическое определение вида литерала при компиляции», или «строкосимвольные литералы».<br />
+<!--[[[И во-вторых, операции производятся над типами]]]--><!--[[[И символьный тип так или иначе присутствует в любом языке программирования, поддерживающем строки: достаточно просто написать #(11l)‘"a"[0]’]]]-->Но даже при отсутствии символьных литералов ничто не помешает писать <pre style="display: inline"><span class="string-literal">"a"</span>[<span class="numeric-literal">0</span>]</pre>.<br />
+А насчёт операций над символьными литералами в 11l уже есть всё что нужно. Вот <span class="sq"><span class="sq_brackets">[</span>слегка модифицированная<span class="sq_brackets">]</span></span> строчка из кода реализации шифра Цезаря (приводится в примерах на главной странице <a href="https://11l-lang.org/ru">11l-lang.org/ru</a>):<br />
+<pre class="code_block">
+<span class="identifier">r</span>[<span class="keyword">L.index</span>] = <span class="identifier">Char</span>(<span class="identifier">code'</span> (<span class="identifier">c</span>.<span class="identifier">code</span> - <span class="string-literal">‘a’</span>.<span class="identifier">code</span> + <span class="identifier">key</span>) % <span class="numeric-literal">26</span> + <span class="string-literal">‘a’</span>.<span class="identifier">code</span>)
+</pre>
+Хотя, признаю, что на Си это записывается короче:<br />
+<pre class="code_block">
+r[L_index] = (c - 'a' + key) % 26 + 'a';
+</pre>
+<hr />
+2023-06-01 <i><b>Автор сайта</b></i><br />
+<br />
+<blockquote>Отсутствие удобного размножения строк на уровне языка в консольных приложениях выливается в полотна литералов псевдографики и отступов.</blockquote>
+Но ситуация не столь катастрофична. В языке могут отсутствовать строковые операции времени компиляции, но скорее всего есть строковые функции, которые при константных аргументах вычисляемы при компиляции. Например, функции <pre class="inline_code">str_repeat</pre> (PHP) и <pre class="inline_code">replicate</pre> (Clipper) тоже размножают строки.<br />
+<br />
+Кстати, в PHP <pre class="inline_code">5 * '-'</pre>, <pre class="inline_code">'-' * 5</pre>, <pre class="inline_code">5 * "-"</pre> и <pre class="inline_code">"-" * 5</pre> выдают одинаковый результат: <pre class="inline_code">0</pre>. Везде разброд и шатания. Се ля ви.<br />
+<hr />
+2023-06-02 <i><b>alextretyak</b></i><br />
+<br />
+<blockquote>Кстати, в PHP <pre class="inline_code">5 * '-'</pre>, <pre class="inline_code">'-' * 5</pre>, <pre class="inline_code">5 * "-"</pre> и <pre class="inline_code">"-" * 5</pre> выдают одинаковый результат: <pre class="inline_code">0</pre>.</blockquote>
+Это смотря в какой версии PHP. В PHP 8 такое умножение является ошибкой. А <!--[[[начиная с]]]-->в версии 7.1.0 и выше <span class="sq"><span class="sq_brackets">[</span>до 8.0<span class="sq_brackets">]</span></span> выдаётся предупреждение.<br />
+Вот хороший сайт, благодаря которому я это выяснил: <a href="https://onlinephp.io">https://onlinephp.io</a> (там можно раскрыть группу ‘PHP Versions’ и поставить галочки на множестве версий PHP, чтобы проверить поведение одного и того же кода на разных версиях).<br />
+<br />
+<blockquote>Везде разброд и шатания.</blockquote>
+Пока да. Но я вижу довольно устойчивую тенденцию <!--[[[ в эволюции]]]-->движения/эволюции языков программирования в сторону некоторого консенсуса. Наиболее удачные решения из одних языков постепенно проникают в другие <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">например, <pre class="inline_code">starts_with/ends_with</pre> в C++ 20 и <pre class="inline_code">std::format</pre> c синтаксисом строки форматирования <!--[[[взятым из]]]-->в стиле Python, в Java 8 наконец-то появились лямбды, в Java 10 — ключевое слово <pre class="inline_code">var</pre></span><span class="cu_brackets_b">}</span></span>. Ошибки проектирования постепенно устраняют в новых версиях (хорошо заметно на том же PHP). Правда, при этом, в новые версии языков добавляют много ненужного хлама... но это уже другая история.<br />
 </div>
 </body>
 </html>
