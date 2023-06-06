@@ -1,0 +1,126 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 200%; line-height: 130%;}
+h2 {font-size: 180%; line-height: 135%;}
+h3 {font-size: 160%; line-height: 140%;}
+h4 {font-size: 145%; line-height: 145%;}
+h5 {font-size: 130%; line-height: 140%;}
+h6 {font-size: 120%; line-height: 140%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+Здравствуйте, Торвальд!<br />
+На днях<!--[[[позавчера, 26-го, на моноблоке в D315 и/или D318]]]--> посмотрел <span class="sq"><span class="sq_brackets">[</span>возможно, повторно<span class="sq_brackets">]</span></span> ваше видео <a href="https://www.youtube.com/watch?v=v2loyk3_nNU">‘Какую власть дает логика’</a>. В нём вы говорите, что среди всех источников информации есть некие "концентраты истины", эдакие "квазары". Вы по-прежнему считаете так же? В таком случае, не могли бы вы поделиться списком таких <!--[[[надёжных ]]]-->источников информации на данный момент времени?<!--[[[ [Ведь с момента публикации того видео прошло без малого 8 лет.]]]]--><!--[[[ [[[Про себя]]]Лично я могу с сожалением констатировать, что я не знаю ни одного такого источника. И более того, предполагаю, что ситуация дальше будет только ухудшаться, особенно если в поиске информации люди будут опираться на выдачу нейронных сетей (вот пример такой лжеинформации: {
+>[https://habr.com/ru/companies/sberbank/articles/730108/]:‘5. Площадь Борцов Революции - центральная площадь Владивостока, на которой расположены различные памятники и архитектурные сооружения, такие как здание администрации края и театр оперы и балета.’
+Как житель Владивостока ответственно заявляю, что театр оперы и балета (а если точнее, то ‘Приморская сцена Мариинского театра’) не находится на площади Борцов Революции [и находится достаточно далеко от неё].
+}).]]]--><br />
+<br />
+<blockquote><a href="https://vk.com/wall13718575_80902?reply=80926&amp;thread=80916"><i>https://vk.com/...</i></a>:<br />
+ну так учусь же всю жизнь пока все работают</blockquote>
+У меня примерно такая же ситуация в жизни <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">но не всю жизнь, а последние лет 10</span><span class="cu_brackets_b">}</span></span>. (Только я больше не учусь, а размышляю.)<br />
+<br />
+<blockquote><a href="https://vk.com/wall13718575_80902?reply=80911&amp;thread=80904"><i>https://vk.com/...</i></a>:<br />
+я никогда не путешествую</blockquote>
+И я тоже. <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none">Точнее, не совсем: просто все мои "путешествия" исходили исключительно из целесообразности, т.е. не было путешествий ради развлечения или отдыха.</span><span class="cu_brackets_b">}</span></span><br />
+<br />
+Прочёл вашу книгу ‘Научный материализм’. Очень заинтересовала предложенная вами система мышления, особенно по части грамотной работы с информацией с целью выявления противоречий в этой информации.<br />
+Вот <a href="./sm-typos" target="_self">список опечаток</a>, которые мне встретились в вашей книге при её прочтении.<br />
+<br />
+В заключение, расскажу немного о себе: более 6 лет я работал программистом в Katauri (той самой, которая разработала ‘Космические рейнджеры’) до фактического её закрытия.<br />
+Моя домашняя страница: <a href="https://alextretyak.ru">alextretyak.ru</a>.<br />
+Моя <a href="https://habr.com/ru/articles/696654/">предпоследняя статья на Хабре</a>.<br />
+</div>
+</body>
+</html>
