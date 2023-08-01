@@ -1,0 +1,125 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 200%; line-height: 130%;}
+h2 {font-size: 180%; line-height: 135%;}
+h3 {font-size: 160%; line-height: 140%;}
+h4 {font-size: 145%; line-height: 145%;}
+h5 {font-size: 130%; line-height: 140%;}
+h6 {font-size: 120%; line-height: 140%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<h3><a href="https://habr.com/ru/articles/696654/">Синтаксис, который невозможно забыть (ссылка на статью)</a></h3>
+<br />
+Комментарии:<br />
+<hr />
+2023-08-01 <i><b>alextretyak</b></i><br />
+<br />
+<blockquote>Вероятность того, что кто-то станет внедрять новый язык минимальна.</blockquote>
+Будем программировать на C++ и Python <span class="sq"><span class="sq_brackets">[</span>или каком-то другом популярном сейчас языке<span class="sq_brackets">]</span></span> до скончания веков, что-ли?<!--[[[ {Да, судя по всему, именно так и будет. (Т.к. «скончание веков» уже совсем близко. Да, грустно. Да, очень много планов и задач остаётся нереализованными. Но вы разве не замечаете, что задачи генерируются быстрее, чем решаются?) {Зачем тогда я занимаюсь этим проектом? Просто, чтобы скоротать время. :)(:}}]]]--> Попробуйте представить, что будет использоваться в IT-сфере через 50-100 лет, если вы не верите в возможность изменений в ближайшие годы/десятилетия.<br />
+<br />
+<!--[[[Я могу понять опытных программистов. Они хорошо изучили какой-то инструмент (язык, библиотеки, IDE) и очень не хотят переучиваться. А потому новые инструменты они всегда будут воспринимать со скепсисом. Но как же быть новым поколениям программистов? Они что теперь из-за этого должны использовать старые инструменты? [[[Я так не считаю. Поэтому я считаю, что важнее будет чтобы язык был понятен не существующим программистам, а новому поколению программистов, тем, кто только начинает изучать программирование.]]]Хотя, разумеется, новое далеко не всегда лучше старого, и чем конкретно предлагаемый язык лучше существующих[[[
+>[https://verdagon.dev/blog/when-to-use-memory-safe-part-2#note17 <- https://habr.com/ru/companies/ispsystem/articles/724882/ <- https://habr.com/ru/companies/ispsystem/articles/747392/ <- https://habr.com/ru/top/]:‘good concurrency support like Pony.’
+]]] — это очень большой вопрос и [[[здесь/]]]в этом сообщении я отвечать на него не буду. Ещё я встретил такое мнение, адресованное мне: «язык должен быть в общих чертах понятен даже программистам, которые его не изучали; ваш же язык не обладает таким свойством (например, я бы не догадался, что значит конструкция "loop 3")». Но я считаю, что важнее будет, чтобы язык был понятен не существующим программистам, а новому поколению программистов, тем, кто только начинает изучать программирование. И когда говорят о циклах, то мне непонятно, почему основной оператор для обозначения циклов называется for (для), а не loop (цикл). И что удобнее/понятнее спрашивать нужно не у современных программистов (которые просто привыкли к for), а у тех, кто только начинает изучать программирование. [Насчёт конструкции `loop 3` — аналогичная запись используется в AutoHotkey[https://www.autohotkey.com/docs/commands/Loop.htm]. Также ключевое слово `loop` есть в языке Rust для обозначения бесконечного цикла. [[[Также]]]И ещё `loop` используется[https://rosettacode.org/wiki/Loops/For] для циклов в некоторых малоизвестных языках программирования: Arturo, Ela, Lasso, NetRexx.]
+
+Кроме того, д]]]-->Данный проект не направлен <!--[[[не ]]]-->на быстрый захват аудитории, поэтому не стоит удивляться его низкой популярности <span class="sq"><span class="sq_brackets">[</span><abbr title=""></abbr><!--[[[на данный момент времени]]/]--><!--[[[во время]]/]-->на момент<!--[[[ времени]]]--> <!--[[[отправки/]]]-->публикации этого сообщения<span class="sq_brackets">]</span></span>. Сначала я <!--[[[планирую/]]]-->намерен тщательнейшим образом проработать основы языка (<!--[[[основные/]]]--><!--[[[базовые ]]]-->встроенные типы, функции, модули<!--[[[, операторы]]]-->) <!--[[[на основе моего личного опыта и моей практики программирования [вот например ‘[[[моя ]]]статья’[https://habr.com/ru/articles/751612/] на эту тему]]]]-->и наиболее интересные решения оформить в виде статей (<a href="https://habr.com/ru/articles/751612/">вот одна из них</a>). <!--[[[Параллельно с этим]]]--><!--[[[Кроме того]/]]--><!--[[[Помимо этого]/]]-->Кроме того, я непрерывно провожу анализ существующих языков программирования, их возможностей, особенностей и их эволюции/развития, при этом порой удаётся найти очень интересные <!--[[[фишки/]]]-->возможности даже в достаточно старых языках (как например <a href="https://alextretyak.ru/comm/compiler.su/k-voprosu-o-paradigmah" title="<- http://compiler.su/k-voprosu-o-paradigmah.php#12">в PL/1</a>) <span class="sq"><span class="sq_brackets">[</span>возможности, которых нет в современных популярных языках<!--[[[ программирования]]]--><span class="sq_brackets">]</span></span>.<!--[[[ Затем [[[потихоньку переписывать все критически важные библиотеки]]]я планирую собрать весь хороший код на планете и потихоньку переписывать его на новом языке, при этом попутно дополняя или модифицируя сам язык.]]]--><br />
+<br />
+<!--[[[Разработчики современных языков программирования (хорошо видно на примере Rust, Swift, Zig, daScript) слишком торопятся[-?(голословное утверждение)-]. Как следствие, они ошибаются. Они]]]-->Современные языки программирования имеют свои сильные стороны, но в то же время практически в каждом из языков есть <!--[[[явные ]]]--><abbr title="хотя создатели этих языков, наверное, считают их «особенностями», а не ошибками :)(:">ошибки</abbr> проектирования или просто неудачные решения <span class="sq"><span class="sq_brackets">[</span>а те языки, в которых их нет, обладают очень <!--[[[скудным функционалом]]/]-->ограниченными возможностями<span class="sq_brackets">]</span></span>. К тому же, в современные языки добавляют <!--[[[очень-]]]-->очень много ненужного функционала <span class="sq"><span class="sq_brackets">[</span>т.к. например современный браузер, современный 3D-движок или современную операционную систему вполне возможно написать на C++98 с использованием буквально нескольких <abbr title="речь об auto/decltype, а также std::unique_ptr и move semantics (и ещё [в меньшей степени] — лямбды и range-based for)">возможностей</abbr> C++11<!--[[[ и C++17]]]-->, а ядро Linux вообще целиком написано и до сих пор пишется на Си (и Rust даже не упоминается в списке языков на <a href="https://github.com/torvalds/linux">GitHub-странице проекта</a>)<span class="sq_brackets">]</span></span>. <!--[[[Про это можно написать [[[немало/]]]много статей [в чём конкретно ошибаются разработчики [[[этих/]]]современных языков (особенно это касается[https://medium.com/@tonyallevato/strings-characters-and-performance-in-swift-a-deep-dive-b7b5bde58d53 ‘Пример того, как не надо делать строки.’] Swift)], но это второстепенная задача. А первостепенная —]]]--><!--[[[#rec##audio#[REC_0002555.wav]]]]-->И своей задачей я ставлю продумать и разработать такой язык программирования, который будет практически лишён ошибок проектирования и который будет содержать достаточно функционала <span class="sq"><span class="sq_brackets">[</span>и по возможности минимальное его количество<span class="sq_brackets">]</span></span> для того, чтобы <!--[[[останется]/]]-->оставаться актуальным и практичным в очень долгосрочной перспективе.<!--[[[ И пока что среди современных языков я не вижу .]]]--><!--[[[
+
+Вообще, разработка языка программирования — это такая деятельность, в которой никакие отдельные даже самые гениальные идеи [[[на итоговый результат практически не влияют]]]не оказывают решающее влияние на успешность проекта в долгосрочной перспективе, а решает ~‘выбор идей’ из огромного множества [как своих, так и чужих], которые бы максимально дополняли друг друга и составляли целостную картину. И чтобы такой выбор был максимально осознанным, проект должен расти медленно. Цитата отсюда[https://ventrellathing.wordpress.com/2013/06/18/the-case-for-slow-programming/]:
+> We are transitioning from an industrial age and an economic era defined by growth to an age of sustainability. Yes, new software and new businesses need to grow. But to be sustainable, they need to grow slowly and with loving care. Like good wine. Like a baby.]]]--><br />
+</div>
+</body>
+</html>

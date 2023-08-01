@@ -87,7 +87,8 @@
 }
 ]]]]
 ‘4. Моё общение на разных интернет-ресурсах’{
-.‘compiler.su[./comm/compiler.su]’
+. compiler.su[./comm/compiler.su]
+. Хабр[./comm/habr]
 
 ‘(Новые сообщения)’[./comm/new]
 }
