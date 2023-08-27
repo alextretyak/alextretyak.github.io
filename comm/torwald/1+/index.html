@@ -1,0 +1,156 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<base target="_blank">
+<script type="text/javascript">
+function spoiler(element, event)
+{
+    if (event.target.nodeName == 'A' || event.target.parentNode.nodeName == 'A' || event.target.onclick)//чтобы работали ссылки в спойлерах и спойлеры2 в спойлерах
+        return;
+    var e = element.firstChild.nextSibling.nextSibling;//element.getElementsByTagName('span')[0]
+    e.previousSibling.style.display = e.style.display;//<span>…</span> must have inverted display style
+    e.style.display = (e.style.display == "none" ? "" : "none");
+    element.firstChild.style.fontWeight =
+    element. lastChild.style.fontWeight = (e.style.display == "" ? "normal" : "bold");
+    event.stopPropagation();
+    //[-Чтобы была возможность выделять текст внутри раскрытого ‘скрытого текста’/спойлера, необходимо [скрытие/]закрытие спойлера делать не просто по нажатию левой кнопки мыши, а по отпусканию левой кнопки мыши при условии отсутствия движения курсора [мыши] после того, как была нажата левая кнопка мыши.-]
+}
+function spoiler2(element, event)
+{
+    element.nextSibling.style.display = (element.nextSibling.style.display == "none" ? "" : "none");
+}
+</script>
+<style type="text/css">
+div#main, td {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    line-height: 160%;
+    text-align: justify;
+}
+span.cu_brackets_b {
+    font-size: initial;
+    font-family: initial;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #6da3bd;
+}
+a:hover {
+    text-decoration: underline;
+    color: #4d7285;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+h1 {font-size: 200%; line-height: 130%;}
+h2 {font-size: 180%; line-height: 135%;}
+h3 {font-size: 160%; line-height: 140%;}
+h4 {font-size: 145%; line-height: 145%;}
+h5 {font-size: 130%; line-height: 140%;}
+h6 {font-size: 120%; line-height: 140%;}
+span.sq {color: gray; font-size: 0.8rem; font-weight: normal; /*pointer-events: none;*/}
+span.sq_brackets {color: #BFBFBF;}
+span.cu_brackets {cursor: pointer;}
+span.cu {background-color: #F7F7FF;}
+abbr {text-decoration: none; border-bottom: 1px dotted;}
+pre {margin: 0;}
+pre, code {font-family: 'Courier New'; line-height: normal}
+ul, ol {margin: 11px 0 7px 0;}
+ul li, ol li {padding: 7px 0;}
+ul li:first-child, ol li:first-child {padding-top   : 0;}
+ul  li:last-child, ol  li:last-child {padding-bottom: 0;}
+table {margin: 9px 0; border-collapse: collapse;}
+table th, table td {padding: 6px 13px; border: 1px solid #BFBFBF;}
+span.spoiler_title {
+    color: #548eaa;
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+div.spoiler_text {
+    /*border: 1px dotted;*/
+    margin: 5px;
+    padding: 3px;
+}
+blockquote {
+    margin: 0 0 7px 0;
+    padding: 7px 12px;
+}
+blockquote:not(.re) {border-left:  0.2em solid #90ddaa; background-color: #fbfffb;}
+blockquote.re       {border-right: 0.2em solid #90ddaa; background-color: #f4fff8;}
+div.note {
+    padding: 18px 20px;
+    background: #ffffd7;
+}
+pre.code_block {padding: 6px 0;}
+pre.inline_code {
+    display: inline;
+    padding: 0px 3px;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+img {vertical-align: middle;}
+
+div#main {width: 100%;}
+@media screen and (min-width: 1050px) {
+    div#main {width: 1024px;}
+}
+</style>
+</head>
+<body>
+<div id="main" style="margin: 0 auto">
+<br />
+<h3>Опечатки</h3>
+<br />
+<table>
+<tr><td colspan="2">Вам нужно быть готовыми к такой ситуации, чтобы вы всегда умели ответить на вопрос «что это?»<span style="background-color: #BFFFBF">.</span> Ещё чаще бывает<br />
+<i>(В новой редакции книги почему-то здесь убрали точку.)</i></td></tr>
+<tr><td>единственный пример, за который до сих цепляются<br />
+<span style="color: #00000000">()</span></td><td>единственный пример, за который до сих<span style="background-color: #BFFFBF"> пор</span> цепляются<br />
+<i>(Не исправлено в новой редакции.)</i></td></tr>
+<tr><td>Это часто приводит к появлению у него случайных идей, которы<span style="background-color: #FFBFBF">х</span> он не осмысливает критически и навязчиво продвигает.<br />
+<i>(Ошибочное исправление в новой редакции.)</i></td><td>Это часто приводит к появлению у него случайных идей, которы<span style="background-color: #BFFFBF">е</span> он не осмысливает критически и навязчиво продвигает.<br />
+<span style="color: #00000000">()</span></td></tr>
+<tr><td colspan="2">Аналогично этим примерам, независимо от попытки представить прежний мир новой математической моделью<span style="background-color: #BFFFBF">,</span> всем телам<br />
+<i>(В новой редакции здесь была убрана запятая, но, на мой взгляд, запятую здесь следовало оставить.)</i></td></tr>
+</table>
+<br />
+<h3>Мои замечания к книге</h3>
+<br />
+<blockquote>Под словами «достаточно эффективно обслуживают» в определении подразумевается, что поведение человека не вызывает угрозы для выполнения его биологической задачи.</blockquote>
+Я бы добавил также «способствуют выполнению его биологической задачи».<br />
+<br />
+<blockquote>история Джордано Бруно, которому пришлось принять смерть на костре за свои идеи, объявленные еретическими. ...и отказался признать свои взгляды ересью даже под страхом смертной казни.</blockquote>
+Я бы не стал упоминать о Бруно в таком контексте <span class="cu_brackets" onclick="return spoiler(this, event)"><span class="cu_brackets_b">{</span><span>…</span><span class="cu" style="display: none"><br />
+Хотя о каких именно идеях/взглядах идёт речь (научных или нет) не уточняется, тем не менее, скорее всего, подразумеваются именно научные идеи/взгляды (т.к. сразу перед Бруно упоминается Галилей).<br />
+</span><span class="cu_brackets_b">}</span></span>, т.к. по <a href="https://arzamas.academy/mag/164-bruno">некоторой информации</a> Джордано Бруно был приговорён вовсе не за свои научные идеи/взгляды, а <!--[[[из-за того, что он активно выступал]]]-->за свои высказывания против христианства <span class="sq"><span class="sq_brackets">[</span>в частности, он утверждал, что «Христос был обманщиком и совершал обманы для совращения народа»<span class="sq_brackets">]</span></span>. И в дошедшем до нас смертном приговоре Бруно не упоминаются гелиоцентрическая система и вообще наука.<!--[[[
+[Замечу, что хотя автор [Т. Олафсен] и не уточняет о каких именно идеях/взглядах идёт речь (научных или нет), во-первых, скорее всего, подразумеваются именно научные идеи/взгляды (т.к. сразу перед Бруно [[[упоминается Галилей]]]автор пишет про Галилея), и, во-вторых, приговорили Бруно не за идеи/взгляды, а за конкретные действия [выступления против христианства].]]]]--><br />
+<br />
+<blockquote>«вышла в свет новая книга автора» — ничего не известно. Ранее это означало бы, что в типографии отпечатан бумажный тираж, но в наше время книга могла появиться и в электронном виде.</blockquote>
+Почему ‘ничего не известно’? Известно, что ‘был отпечатан бумажный тираж и/или книга была опубликована в электронном виде’. Или с точки зрения эффективного мышления такие высказывания (не являющиеся фактами по вашему определению) стоит вообще игнорировать?<br />
+<br />
+<blockquote>«спортсменка победила в забеге» и «человек умер» являются оценочными суждениями, а высказывания ... «спортсменка пересекла финишную черту первой из группы бегунов» и «у человека остановились дыхание и сердцебиение» являются описаниями материальных изменений.</blockquote>
+Не могу согласиться с такой радикальной позицией. Во-первых, высказывания вида «спортсменка такая-то победила в забеге таком-то» являются вполне допустимыми и общепринятыми описаниями фактов, и <!--[[[используются ]]]-->в текстах спортивных новостей используются именно такие формулировки (каждый раз писать уточнения вроде ‘пересекла финишную черту первой’ просто нецелесообразно, т.к. читающим спортивные новости правила соревнований <span class="sq"><span class="sq_brackets">[</span>и критерий "победы"<span class="sq_brackets">]</span></span> хорошо известны). Во-вторых, высказывание «у человека остановились дыхание и сердцебиение» <!--[[[может быть описанием материальных изменений только в том случае, когда в момент смерти человек был подключен к специальным аппаратам, контролирующим его дыхание и сердцебиение [иначе о причинах смерти можно только догадываться]; соответственно, в общем случае, когда причина смерти точно не известна, ничего не остаётся кроме как сказать «человек умер», указав приблизительное время этого материального события.]]]-->ничего не говорит о причинах смерти и такая формулировка является излишней, т.к. в результате смерти <span class="sq"><span class="sq_brackets">[</span>по любой причине<span class="sq_brackets">]</span></span> дыхание и сердцебиение останавливаются в любом случае.<br />
+<br />
+<blockquote>методы получения первичной информации: простое наблюдение, измерение и эксперимент.</blockquote>
+Похоже, что «измерение» в этой тройке лишнее. К фразе <i>«Наблюдение подразумевает сбор информации о предметах и процессах в естественных условиях»</i> я бы добавил <i>«, а эксперимент — в искусственных. При этом сбор информации может включать в себя измерение <span class="sq"><span class="sq_brackets">[</span>... и далее пояснение что это такое<span class="sq_brackets">]</span></span>»</i>.<br />
+<br />
+<blockquote>гравитация всё же существует и распространяется с той же геометрией, что и электромагнитное поле</blockquote>
+Может имелось в виду не «геометрией», а «скоростью»?<br />
+<br />
+<blockquote>Вести людей за таким лозунгом</blockquote>
+На мой взгляд, вместо «за» лучше подошёл бы предлог «с».<br />
+<br />
+<blockquote>возьмём для примера какую-нибудь большую и известную компанию, например из тех, чьи главные офисы находятся в Кремниевой долине в Калифорнии, США. Пусть это будет компания Amazon.com.</blockquote>
+Главный офис Amazon располагается в Сиэтле, штат Вашингтон.<br />
+<br />
+<blockquote>Махатма Ганди лучше всех понял, как изменять общественное бытие скорее всего. Его слова «Будь теми изменениями, которые ты хочешь видеть в мире»</blockquote>
+Мне гораздо больше нравится несколько другая формулировка этой цитаты:<br />
+<blockquote class="re">Если желаешь, чтобы мир изменился, — сам стань этим изменением.</blockquote>
+Впрочем, принадлежность этих слов непосредственно Ганди <a href="https://en.wikiquote.org/wiki/Mahatma_Gandhi#WeNeedToBeTheChangeWeWishToSeeInTheWorld">является</a> спорной. Поэтому лучше говорить, не «его слова», а «приписываемые ему слова» или как-то так.<br />
+<br />
+</div>
+</body>
+</html>
