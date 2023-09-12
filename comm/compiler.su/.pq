@@ -10,6 +10,7 @@
 . ‘Десятка худших фич C#’[./desyatka-hudshih-fich-c-sharp]
 . ‘Правила языка: строковые литералы’[./pravila-yazyka-strokovye-literaly]
 . ‘К вопросу о парадигмах’[./k-voprosu-o-paradigmah]
+. ‘Не поминайте всуе PL/1’[./ne-pominajte-vsue-pl1]
 
 Смешанные:
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
