@@ -11,6 +11,7 @@
 . ‘Правила языка: строковые литералы’[./pravila-yazyka-strokovye-literaly]
 . ‘К вопросу о парадигмах’[./k-voprosu-o-paradigmah]
 . ‘Не поминайте всуе PL/1’[./ne-pominajte-vsue-pl1]
+. ‘Заметки о выходе из функции без значения и зеркальности get и put’[./zametki-o-vyhode-iz-funktsii-bez-znacheniya-i-zerkalnosti-get-i-put]
 
 Смешанные:
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
