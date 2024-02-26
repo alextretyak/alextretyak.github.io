@@ -12,6 +12,7 @@
 . ‘К вопросу о парадигмах’[./k-voprosu-o-paradigmah]
 . ‘Не поминайте всуе PL/1’[./ne-pominajte-vsue-pl1]
 . ‘Заметки о выходе из функции без значения и зеркальности get и put’[./zametki-o-vyhode-iz-funktsii-bez-znacheniya-i-zerkalnosti-get-i-put]
+. ‘О неправомерном доступе к памяти через указатели’[./o-nepravomernom-dostupe-k-pamyati-cherez-ukazateli]
 
 Смешанные:
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
