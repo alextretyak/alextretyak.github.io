@@ -13,6 +13,7 @@
 . ‘Не поминайте всуе PL/1’[./ne-pominajte-vsue-pl1]
 . ‘Заметки о выходе из функции без значения и зеркальности get и put’[./zametki-o-vyhode-iz-funktsii-bez-znacheniya-i-zerkalnosti-get-i-put]
 . ‘О неправомерном доступе к памяти через указатели’[./o-nepravomernom-dostupe-k-pamyati-cherez-ukazateli]
+. ‘Постфиксные инкремент и декремент’[./postfiksnye-inkrement-i-dekrement]
 
 Смешанные:
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
