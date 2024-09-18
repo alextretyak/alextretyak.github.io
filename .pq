@@ -57,6 +57,7 @@
 . pqmarkup\пк-разметка[http://pqmarkup.org/ru].
 . ELDF[http://eldf.org/ru].
 . [[[новый ]]]‘Язык программирования 11l’[https://11l-wikipedia.github.io/ru].
+. Симкод[https://habr.com/ru/articles/840070/] — современный язык ассемблера.
 }
 }
 
