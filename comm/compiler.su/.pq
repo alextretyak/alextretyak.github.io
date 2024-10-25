@@ -15,6 +15,7 @@
 . ‘О неправомерном доступе к памяти через указатели’[./o-nepravomernom-dostupe-k-pamyati-cherez-ukazateli]
 . ‘Постфиксные инкремент и декремент’[./postfiksnye-inkrement-i-dekrement]
 . ‘ЕС ЭВМ — это измена, трусость и обман?’[./es-evm-eto-izmena-trusost-i-obman]
+. ‘Продолжение цикла и выход из него’[./prodolzhenie-tsikla-i-vykhod-iz-nego]
 
 Смешанные:
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
