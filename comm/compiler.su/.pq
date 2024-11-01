@@ -19,3 +19,6 @@
 
 Смешанные:
 . ‘Шестнадцатиричные и двоичные константы’[./shestnadtsatirichnye-i-dvoichnye-konstanty]
+
+Деловые:
+. ‘Новости и прочее’[./novosti]
