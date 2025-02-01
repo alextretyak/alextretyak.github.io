@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type='text/css'>
+.tbl_1 {border: 2px solid #220077;padding: 25px!important;border-radius: 20px/15px;background-color: white;}
+.text {padding: 10px;border-radius: 20px/15px;background-color: white; text-align: justify;font-size: 14px;font-family: helvetica,arial;}
+.citata  {background-image: url('https://compiler.su/_I/citata.png'); background-repeat: no-repeat; background-color: #ede6ff; font-style: italic; border: 1px solid #ddccff; padding: 3 10 3 40; border-radius: 10px/7px; margin: 5px;}
+pre { white-space:pre-wrap; text-align: justify; font-style: italic; font-size: 14; font-weight: 600; background: #fbf7ff; border: 2px solid #ddd7ee; border-radius: 10px/7px; border-left: 8px solid #ddd7ee; padding: 5px;}
+code { font-style: italic; font-size: 16; font-weight: 600; background-color: #eeeeff; }
+</style>
+</head>
+
+<body onload='if (window.location.search == "?t") with (document.getElementsByTagName("textarea")[0]) value = `<div class=citata>Если менять поведение по умолчанию внутри переключателя на противоположное, то и ключевые слова можно поменять на противоположные. Был <code>break</code> — сделать <code>continue</code>.</div>Проблема с двусмысленностью повторится, просто теперь с новым ключевым словом.<pre> for ( ... )<br>    switch ( ... )<br>       case: ...<br>           ...<br>           break/contunue;</pre>К чему относится <code>break/contunue</code> — к циклу или переключателю? И здесь та же самая двусмысленность:<pre> switch ( ... )<br>    case: ...<br>        ...<br>        for ( ... )<br>           break/contunue;</pre>Конечно, можно ввести правило, что ключевое слово относится к ближайшему циклу/переключателю. Но тогда как отнести не к ближайшему, а следующему? Писать <code>break 2/contunue 2</code>?`, dispatchEvent(new Event("input"));'>
+<table border=0 width=100% height=100%>
+<tr>
+    <td width='50%'>
+        <div class='text tbl_1' id='rendered-message'>
+        </div>
+    </td>
+    <td>
+        <textarea cols=124 rows=30 oninput='document.getElementById("rendered-message").innerHTML = event.target.value'></textarea>
+    </td>
+</tr>
+</table>
+</body>
+</html>
