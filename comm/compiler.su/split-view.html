@@ -16,13 +16,29 @@ textarea:focus { border-color: #BBB; outline: none !important; }
 <table border=0 width=100% height=100%>
 <tr>
     <td width='50%'>
-        <div class='text tbl_1' id='rendered-message'>
+        <div class='text tbl_1' id='rendered-message' contenteditable='true'>
         </div>
     </td>
     <td>
-        <textarea cols=124 rows=30 oninput='document.getElementById("rendered-message").innerHTML = event.target.value'></textarea>
+        <textarea cols=124 rows=30 oninput='document.getElementById("rendered-message").innerHTML = event.target.value; observer.takeRecords()'></textarea>
     </td>
 </tr>
 </table>
+<script>
+// [https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver <- https://stackoverflow.com/questions/1391278/contenteditable-change-events <- google:‘contenteditable on change’]
+observer = new MutationObserver(function () {
+    document.getElementsByTagName("textarea")[0].value = document.getElementById("rendered-message").innerHTML;
+});
+observer.observe(document.getElementById("rendered-message"), { childList: true, subtree: true, characterData: true });
+
+// [https://stackoverflow.com/questions/73562400/make-contenteditable-not-insert-div-on-enter-but-behave-like-shift-enter <- google:‘contenteditable treat enter as shift enter’]
+document.getElementById("rendered-message").addEventListener('keypress', function(event) {
+    // enter keycode is 13
+    if (event.keyCode == 13 && event.shiftKey == false) {
+      event.preventDefault();
+      document.execCommand("insertLineBreak");
+    }
+});
+</script>
 </body>
 </html>
