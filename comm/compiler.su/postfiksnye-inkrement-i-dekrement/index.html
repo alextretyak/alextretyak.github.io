@@ -447,7 +447,7 @@ int buffered_stream_get_byte(buffered_stream_t *stream)
 int buffered_stream_get_byte(buffered_stream_t *stream, int default_value)
 {
     int result = default_value;
-    
+
     if (!buffered_stream_is_empty(stream))
     {
         result = stream->buffer[stream->buffer_pos];

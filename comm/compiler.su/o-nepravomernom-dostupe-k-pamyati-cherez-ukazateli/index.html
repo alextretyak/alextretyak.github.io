@@ -113,34 +113,34 @@ div#main {width: 100%;}
 Пример, в котором бинарный/ассемблерный коды функций F1() и F2() отличаются, также отличаются и их "прототипы" вызова в машинных кодах.<br />
 <pre class="code_block">
 #include &lt;iostream>
- 
+
 using namespace std;
- 
+
 typedef int&amp; IntRef_t;
 typedef int* IntPtr_t;
- 
+
 void F1(IntPtr_t* IntPtrPtr)
 {
     int IntValue = ++(**IntPtrPtr);
     printf("F1 = %i\n", IntValue);
 }
- 
+
 void F2(IntRef_t&amp; IntRefRef)
 {
     int IntValue = ++IntRefRef;
     printf("F2 = %i\n", IntValue);
 }
- 
+
 int main()
 {
     int D[2] = {0, 0};
     IntPtr_t IntPtr;
- 
+
     IntPtr = &amp;D[0];
     F1(&amp;IntPtr);
     IntRef_t IntRef1 = D[1];
     F2(IntRef1);
- 
+
     printf("D[0] = %i, D[1] = %i\n", D[0], D[1]);
     return 0;
 }

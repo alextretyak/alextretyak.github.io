@@ -535,14 +535,14 @@ j = i
 
 С точки зрения пользователя языков, выражу свое скромное мнение. Мне было бы удобно, что бы циклу можно было присвоить имя, если нужно, чтобы оперировать не с тем циклом, в контексте которого выполняются команды, а с тем циклом, с которым нужно и когда это нужно. Проиллюстрирую идею. Вместо меток:
 #(C)‘
-while (true) 
+while (true)
 {
-    switch (instr[i]) 
+    switch (instr[i])
     {
         case '[':
             nesting_level++;
             break;
-       
+
         case ']':
             if (--nesting_level == 0)
                 goto break_;
@@ -554,14 +554,14 @@ break_:
 ’
 Было бы удобно, например так:
 #(C)‘
-while.levels (true) 
+while.levels (true)
 {
-    switch (instr[i]) 
+    switch (instr[i])
     {
         case '[':
             nesting_level++;
             break;
-            
+
         case ']':
             if (--nesting_level == 0)
                 break(while.levels); // Выход из блока кода конкретного while.
