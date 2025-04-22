@@ -1,0 +1,14 @@
+После приёма должно остаться пустых ячеек:
+<table>
+<script>
+// Thanks to codeconvert.ai!
+const today = new Date();
+const targetDate = new Date(2024, 4, 2); // Month is 0-indexed in JavaScript
+const t = -1 + Math.floor((today - targetDate) / (1000 * 60 * 60 * 24)) * 3;
+document.write(`
+<tr><td>Утром:</td>     <td>${( t      % 10).toString().replace(/0+$/, '').replace(/\.$/, '')}</td></tr>
+<tr><td>В обед:</td>    <td>${((t + 1) % 10).toString().replace(/0+$/, '').replace(/\.$/, '')}</td></tr>
+<tr><td>Перед сном:</td><td>${((t + 2) % 10).toString().replace(/0+$/, '').replace(/\.$/, '')}</td></tr>
+`);
+</script>
+</table>
