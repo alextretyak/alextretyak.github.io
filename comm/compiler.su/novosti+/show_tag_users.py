@@ -25,7 +25,7 @@ print('[]')
 print("\n".join(f'{u}: {c}' for u, c in square_users.items() if u not in parens_users))
 print()
 print('() + []')
-print("\n".join(f'{u}: {c}' for u, c in parens_users.items() if u in square_users))
+print("\n".join(f'{u}: {c}/{square_users[u]}' for u, c in parens_users.items() if u in square_users))
 
 r'''
 (**жирный**) или [b]жирный[/b]
